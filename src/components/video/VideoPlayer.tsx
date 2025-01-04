@@ -39,10 +39,10 @@ export const VideoPlayer = ({
             fs: 0,
             disablekb: 1,
             enablejsapi: 1,
-            loop: 1, // Enable looping
-            playlist: videoUrl, // Required for looping - we provide the same video ID
+            loop: 0,
             showsearch: 0,
-            ecver: 2
+            ecver: 2,
+            playlist: 0 // Disable playlist
           },
         }}
         onReady={(event) => {
