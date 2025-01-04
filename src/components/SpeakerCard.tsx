@@ -24,7 +24,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
 
   return (
     <div
-      className="relative rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer w-full aspect-video"
+      className="relative rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer w-full aspect-video"
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
