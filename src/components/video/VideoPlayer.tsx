@@ -35,13 +35,14 @@ export const VideoPlayer = ({
             playsinline: 1,
             origin: window.location.origin,
             endscreen: 0,
-            iv_load_policy: 3, // Disable video annotations
-            fs: 0, // Disable fullscreen button
-            disablekb: 1, // Disable keyboard controls
+            iv_load_policy: 3,
+            fs: 0,
+            disablekb: 1,
             enablejsapi: 1,
-            loop: 0,
+            loop: 1, // Enable looping
+            playlist: videoUrl, // Required for looping - we provide the same video ID
             showsearch: 0,
-            ecver: 2 // Use the newer embedded player version
+            ecver: 2
           },
         }}
         onReady={(event) => {
