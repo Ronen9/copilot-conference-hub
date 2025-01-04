@@ -28,13 +28,24 @@ export const useVideoControl = (videoUrl: string) => {
 
   const handleClick = () => {
     if (player) {
+      // First, dispatch event to pause other videos
       videoEvents.dispatchEvent(
         new CustomEvent('cardPlayed', { detail: { videoUrl } })
       );
       
+      // Then handle this video's playback
+      console.log('Handling click - current mute state:', isMuted);
+      
+      // Ensure we unmute and set volume before playing
       player.unMute();
       player.setVolume(100);
-      player.playVideo();
+      
+      // Small delay to ensure unmute takes effect
+      setTimeout(() => {
+        player.playVideo();
+        console.log('Playing video with sound');
+      }, 50);
+      
       setIsMuted(false);
       setIsPlaying(true);
     }
