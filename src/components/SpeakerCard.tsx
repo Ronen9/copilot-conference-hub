@@ -19,7 +19,8 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
     isPlaying,
     handleClick,
     handleVideoEnd,
-    setPlayer
+    setPlayer,
+    setIsPlaying
   } = useVideoControl(videoUrl);
 
   return (
@@ -38,6 +39,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
         if (player) {
           player.pauseVideo();
           player.mute();
+          setIsPlaying(false); // Add this line to update the playing state
           console.log('Mouse left card, pausing video and muting');
         }
       }}

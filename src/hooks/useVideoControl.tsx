@@ -67,6 +67,7 @@ export const useVideoControl = (videoUrl: string) => {
     isPlaying,
     handleClick,
     handleVideoEnd,
-    setPlayer
+    setPlayer,
+    setIsPlaying
   };
 };
