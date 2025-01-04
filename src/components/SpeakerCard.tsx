@@ -23,24 +23,26 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
   } = useVideoControl(videoUrl);
 
   return (
-    <div
-      className="relative rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer w-full aspect-video"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => {
-        setIsHovering(false);
-        if (player && isMuted) {
-          player.pauseVideo();
-        }
-      }}
-      onClick={handleClick}
-    >
-      <VideoPlayer
-        videoUrl={videoUrl}
-        onPlayerReady={(event) => setPlayer(event.target)}
-        isHovering={isHovering}
-        isMuted={isMuted}
-        onVideoEnd={handleVideoEnd}
-      />
+    <div className="flex flex-col">
+      <div
+        className="relative rounded-lg overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer w-full aspect-video"
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => {
+          setIsHovering(false);
+          if (player && isMuted) {
+            player.pauseVideo();
+          }
+        }}
+        onClick={handleClick}
+      >
+        <VideoPlayer
+          videoUrl={videoUrl}
+          onPlayerReady={(event) => setPlayer(event.target)}
+          isHovering={isHovering}
+          isMuted={isMuted}
+          onVideoEnd={handleVideoEnd}
+        />
+      </div>
       <SpeakerInfo
         name={name}
         title={title}
