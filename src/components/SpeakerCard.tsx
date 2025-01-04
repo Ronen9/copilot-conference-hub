@@ -38,7 +38,6 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
 
   const handleReady = (event: any) => {
     setPlayer(event.target);
-    // Start muted by default
     event.target.mute();
   };
 
@@ -59,6 +58,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
           new CustomEvent('cardPlayed', { detail: { videoUrl } })
         );
         player.unMute();
+        player.setVolume(100); // Ensure volume is at maximum
         player.playVideo();
         setIsPlaying(true);
       } else {
