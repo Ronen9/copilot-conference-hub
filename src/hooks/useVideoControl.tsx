@@ -13,10 +13,12 @@ export const useVideoControl = (videoUrl: string) => {
     const handleOtherCardPlay = (e: Event) => {
       const customEvent = e as CustomEvent;
       if (customEvent.detail.videoUrl !== videoUrl && player) {
+        console.log('Another card is playing, stopping this video:', videoUrl);
         player.pauseVideo();
         player.mute();
         setIsMuted(true);
         setIsPlaying(false);
+        setIsHovering(false);
       }
     };
 
@@ -28,20 +30,23 @@ export const useVideoControl = (videoUrl: string) => {
 
   const handleClick = () => {
     if (player) {
+      console.log('Card clicked, playing video:', videoUrl);
+      // Notify other cards to stop
       videoEvents.dispatchEvent(
         new CustomEvent('cardPlayed', { detail: { videoUrl } })
       );
       
-      // Add a small delay before unmuting and setting volume
+      // Play this video
+      player.playVideo();
+      setIsPlaying(true);
+      
+      // Add a small delay before unmuting to ensure smooth transition
       setTimeout(() => {
         player.unMute();
         player.setVolume(100);
         console.log('Unmuting and setting volume after delay');
         setIsMuted(false);
       }, 100);
-
-      player.playVideo();
-      setIsPlaying(true);
     }
   };
 
@@ -62,6 +67,7 @@ export const useVideoControl = (videoUrl: string) => {
     isPlaying,
     handleClick,
     handleVideoEnd,
-    setPlayer
+    setPlayer,
+    setIsPlaying
   };
 };
