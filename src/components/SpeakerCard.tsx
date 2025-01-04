@@ -19,51 +19,26 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
     isPlaying,
     handleClick,
     handleVideoEnd,
-    setPlayer,
-    setIsPlaying
+    setPlayer
   } = useVideoControl(videoUrl);
 
   return (
     <div
       className="relative rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer"
-      onMouseEnter={() => {
-        setIsHovering(true);
-        if (player && !isPlaying) {
-          player.mute();
-          player.playVideo();
-          console.log('Mouse entered card, playing muted video');
-        }
-      }}
+      onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
         if (player) {
-          console.log('Mouse left card, attempting to pause video');
           player.pauseVideo();
           player.mute();
-          setIsPlaying(false);
-          console.log('Video paused and muted, isPlaying set to false');
+          console.log('Mouse left card, pausing video and muting');
         }
       }}
       onClick={handleClick}
     >
       <VideoPlayer
         videoUrl={videoUrl}
-        onPlayerReady={(event) => {
-          console.log('Player ready event received');
-          const playerInstance = event.target;
-          if (playerInstance) {
-            console.log('Setting up player with initial state');
-            setPlayer(playerInstance);
-            // Set initial volume after a small delay to ensure player is ready
-            setTimeout(() => {
-              if (playerInstance) {
-                playerInstance.setVolume(100);
-                playerInstance.mute();
-                console.log('Initial player setup complete');
-              }
-            }, 100);
-          }
-        }}
+        onPlayerReady={(event) => setPlayer(event.target)}
         isHovering={isHovering}
         isMuted={isMuted}
         onVideoEnd={handleVideoEnd}
