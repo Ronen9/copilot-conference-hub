@@ -13,14 +13,22 @@ const AgendaSection = () => {
   return (
     <div className="container mx-auto px-4 py-12 bg-black/30 rounded-xl backdrop-blur-sm">
       <h2 className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">לוח זמנים</h2>
-      <div className="space-y-4">
+      <div className="space-y-2">
         {agenda.map((item, index) => (
-          <div key={index} className="flex items-center justify-between p-4 border-b border-white/10">
-            <div className="text-right flex-grow">
-              <h3 className={`text-xl font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}>{item.title}</h3>
-              {item.speaker && <p className="text-[#9b87f5]">{item.speaker}</p>}
+          <div key={index} className="flex items-center gap-4 px-4 py-2 border-b border-white/10">
+            <div className="text-2xl font-bold text-[#9b87f5] min-w-[80px]">{item.time}</div>
+            <div className="text-white/20 font-bold">|</div>
+            <div className="flex-grow">
+              <span className={`text-lg font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}>
+                {item.title}
+              </span>
+              {item.speaker && (
+                <>
+                  <span className="text-white/20 mx-2 font-bold">|</span>
+                  <span className="text-[#9b87f5]">{item.speaker}</span>
+                </>
+              )}
             </div>
-            <div className="text-2xl font-bold text-[#9b87f5] mr-4">{item.time}</div>
           </div>
         ))}
       </div>

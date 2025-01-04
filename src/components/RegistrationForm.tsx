@@ -31,7 +31,7 @@ const RegistrationForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2 text-right">
               שם מלא
               <span className="text-[#ea384c] mr-1">*</span>
             </label>
@@ -46,7 +46,7 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2 text-right">
               אימייל
               <span className="text-[#ea384c] mr-1">*</span>
             </label>
@@ -62,7 +62,7 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2 text-right">
               טלפון
               <span className="text-[#ea384c] mr-1">*</span>
             </label>
@@ -78,7 +78,7 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">חברה</label>
+            <label className="block text-sm font-medium mb-2 text-right">חברה</label>
             <Input
               name="company"
               value={formData.company}
@@ -90,7 +90,7 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">תפקיד</label>
+            <label className="block text-sm font-medium mb-2 text-right">תפקיד</label>
             <Input
               name="title"
               value={formData.title}
@@ -102,7 +102,7 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm font-medium mb-2 text-right">
               מספר רכב
               <span className="text-sm text-gray-400 mr-2">(לצורך הסדרי חניה)</span>
             </label>
