@@ -10,10 +10,17 @@ const Index = () => {
       
       {/* Title Section */}
       <div className="container mx-auto px-4 py-12 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-[#9b87f5] flex flex-col items-center gap-4">
-          <span>דור חדש של פרודוקטיביות</span>
-          <span>קופיילוט בשירות העובד המודרני</span>
-        </h1>
+        <div className="flex items-center justify-center gap-6">
+          <h1 className="text-4xl md:text-5xl font-bold mb-8 text-[#9b87f5] flex flex-col items-center gap-4">
+            <span>דור חדש של פרודוקטיביות</span>
+            <span>קופיילוט בשירות העובד המודרני</span>
+          </h1>
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Microsoft_365_Copilot_Icon.svg/2048px-Microsoft_365_Copilot_Icon.svg.png"
+            alt="Copilot Logo"
+            className="w-24 h-24 object-contain"
+          />
+        </div>
       </div>
 
       <SpeakersGrid />
