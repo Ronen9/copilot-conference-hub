@@ -38,25 +38,34 @@ export const useVideoControl = (videoUrl: string) => {
 
     const setupAudio = async () => {
       try {
-        // First ensure video is playing
+        // First ensure video is playing and volume is set
         player.playVideo();
         
-        // Set volume to 100 before unmuting
+        // Set initial volume
         player.setVolume(100);
-        console.log('Volume set to:', player.getVolume());
+        console.log('Initial volume set to:', player.getVolume());
         
-        // Small delay to ensure volume is set
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Small delay before unmuting
+        await new Promise(resolve => setTimeout(resolve, 50));
         
-        // Unmute and update state
+        // Unmute and verify
         player.unMute();
-        console.log('Player unmuted, isMuted state:', player.isMuted());
+        console.log('Player unmuted, checking mute state:', player.isMuted());
+        
+        // Set volume again after unmuting
+        player.setVolume(100);
+        console.log('Volume after unmute:', player.getVolume());
+        
+        // Update state
         setIsMuted(false);
         setIsPlaying(true);
         
-        // Force a volume update
-        player.setVolume(100);
-        console.log('Final volume check:', player.getVolume());
+        // Final volume check and set
+        const currentVolume = player.getVolume();
+        if (currentVolume !== 100) {
+          console.log('Volume not at 100, setting again. Current:', currentVolume);
+          player.setVolume(100);
+        }
       } catch (error) {
         console.error('Error in setupAudio:', error);
       }

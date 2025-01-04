@@ -17,6 +17,15 @@ export const VideoPlayer = ({
 }: VideoPlayerProps) => {
   console.log('VideoPlayer render for:', videoUrl, 'isMuted:', isMuted);
   
+  const handleReady = (event: any) => {
+    const player = event.target;
+    // Initialize player with full volume
+    player.setVolume(100);
+    console.log('Player ready, setting initial volume:', player.getVolume());
+    // Pass the initialized player up
+    onPlayerReady(player);
+  };
+
   return (
     <div className="aspect-video w-full">
       <YouTube
@@ -36,10 +45,7 @@ export const VideoPlayer = ({
             volume: 100
           },
         }}
-        onReady={(event) => {
-          event.target.setVolume(100);
-          onPlayerReady(event.target);
-        }}
+        onReady={handleReady}
         onEnd={onVideoEnd}
         className="w-full h-full"
       />
