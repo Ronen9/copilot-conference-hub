@@ -1,52 +1,36 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import YouTube from 'react-youtube';
 import { Volume2, VolumeX, Pause, Play } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [player, setPlayer] = useState<any>(null);
 
-  useEffect(() => {
-    // Initialize YouTube Player API
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-
-    // Create YouTube player when API is ready
-    window.onYouTubeIframeAPIReady = () => {
-      console.log('YouTube API Ready');
-      new window.YT.Player(iframeRef.current!, {
-        events: {
-          onReady: (event) => {
-            console.log('Player ready');
-            event.target.playVideo();
-            event.target.mute();
-          }
-        }
-      });
-    };
-  }, []);
+  const handleReady = (event: any) => {
+    setPlayer(event.target);
+    event.target.playVideo();
+  };
 
   const toggleMute = () => {
-    if (iframeRef.current) {
-      const message = isMuted ? 'unMute' : 'mute';
-      iframeRef.current.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: message }), 
-        '*'
-      );
+    if (player) {
+      if (isMuted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
       setIsMuted(!isMuted);
     }
   };
 
   const togglePlayPause = () => {
-    if (iframeRef.current) {
-      const message = isPlaying ? 'pauseVideo' : 'playVideo';
-      iframeRef.current.contentWindow?.postMessage(
-        JSON.stringify({ event: 'command', func: message }), 
-        '*'
-      );
+    if (player) {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
       setIsPlaying(!isPlaying);
     }
   };
@@ -54,14 +38,22 @@ export const HeroSection = () => {
   return (
     <div className="relative h-[60vh] w-full">
       <div className="absolute inset-0 overflow-hidden">
-        <iframe
-          ref={iframeRef}
-          width="100%"
-          height="100%"
-          src="https://www.youtube.com/embed/SaCVSUbYpVc?si=pZN0oEiKA8JMI-J1&enablejsapi=1&autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=SaCVSUbYpVc"
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
+        <YouTube
+          videoId="SaCVSUbYpVc"
+          opts={{
+            height: '100%',
+            width: '100%',
+            playerVars: {
+              autoplay: 1,
+              mute: 1,
+              controls: 0,
+              showinfo: 0,
+              rel: 0,
+              loop: 1,
+              playlist: 'SaCVSUbYpVc'
+            },
+          }}
+          onReady={handleReady}
           className="absolute inset-0 w-full h-full"
         />
         <div className="absolute bottom-16 right-4 flex gap-2">
