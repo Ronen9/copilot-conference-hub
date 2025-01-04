@@ -81,6 +81,7 @@ export const useVideoControl = (videoUrl: string) => {
 
   const handleVideoEnd = () => {
     if (player) {
+      console.log('Video ended, restarting from beginning');
       player.seekTo(0);
       if (!isMuted) {
         player.playVideo();
