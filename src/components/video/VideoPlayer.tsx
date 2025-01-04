@@ -42,7 +42,9 @@ export const VideoPlayer = ({
             loop: 0,
             showsearch: 0,
             ecver: 2,
-            playlist: videoUrl // Set playlist to videoUrl to ensure proper playback
+            playlist: videoUrl, // Set playlist to videoUrl to ensure proper playback
+            related: 0, // Disable related videos
+            annotations: 0 // Disable annotations
           },
         }}
         onReady={(event) => {
