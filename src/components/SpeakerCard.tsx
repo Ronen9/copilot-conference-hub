@@ -22,6 +22,8 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
     setPlayer
   } = useVideoControl(videoUrl);
 
+  const isImage = videoUrl.startsWith('http') && (videoUrl.includes('.jpg') || videoUrl.includes('media.licdn.com'));
+
   return (
     <div className="flex flex-col">
       <div
@@ -35,13 +37,21 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
         }}
         onClick={handleClick}
       >
-        <VideoPlayer
-          videoUrl={videoUrl}
-          onPlayerReady={(event) => setPlayer(event.target)}
-          isHovering={isHovering}
-          isMuted={isMuted}
-          onVideoEnd={handleVideoEnd}
-        />
+        {isImage ? (
+          <img 
+            src={videoUrl} 
+            alt={name}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <VideoPlayer
+            videoUrl={videoUrl}
+            onPlayerReady={(event) => setPlayer(event.target)}
+            isHovering={isHovering}
+            isMuted={isMuted}
+            onVideoEnd={handleVideoEnd}
+          />
+        )}
       </div>
       <SpeakerInfo
         name={name}
