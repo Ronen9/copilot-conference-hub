@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { MapPin, PartyPopper } from "lucide-react";
 import confetti from 'canvas-confetti';
 
 const AgendaSection = () => {
@@ -49,6 +49,9 @@ const AgendaSection = () => {
                 onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
               >
                 {item.title}
+                {item.time === "19:50" && (
+                  <PartyPopper className="inline-block ml-2 text-[#F97316]" size={20} />
+                )}
               </span>
               {item.speaker && (
                 <>
