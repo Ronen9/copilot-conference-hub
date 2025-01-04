@@ -30,10 +30,18 @@ export const VideoPlayer = ({
             controls: 0,
             mute: 0,
             showinfo: 0,
-            rel: 0, // Prevents showing related videos
+            rel: 0,
+            modestbranding: 1,
             playsinline: 1,
             origin: window.location.origin,
-            endscreen: 0 // Disable end screen
+            endscreen: 0,
+            iv_load_policy: 3, // Disable video annotations
+            fs: 0, // Disable fullscreen button
+            disablekb: 1, // Disable keyboard controls
+            enablejsapi: 1,
+            loop: 0,
+            showsearch: 0,
+            ecver: 2 // Use the newer embedded player version
           },
         }}
         onReady={(event) => {
