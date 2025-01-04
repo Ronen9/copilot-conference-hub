@@ -1,3 +1,5 @@
+import { MapPin } from "lucide-react";
+
 const AgendaSection = () => {
   const agenda = [
     { time: "17:00", title: "התכנסות עם קפה ומאפה" },
@@ -12,10 +14,16 @@ const AgendaSection = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 bg-black/30 rounded-xl backdrop-blur-sm">
-      <div className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">
-        <span>5.3.25</span>
-        <span className="mx-2 text-white/20">|</span>
-        <span>אלן טיורינג 3, הרצליה</span>
+      <div className="flex flex-col items-center gap-2">
+        <div className="flex items-center gap-2 text-[#9b87f5]">
+          <MapPin size={20} />
+          <span>משרדי מיקרוסופט</span>
+        </div>
+        <div className="text-3xl font-bold text-center text-[#9b87f5]">
+          <span>5.3.25</span>
+          <span className="mx-2 text-white/20">|</span>
+          <span>אלן טיורינג 3, הרצליה</span>
+        </div>
       </div>
       <div className="space-y-2">
         {agenda.map((item, index) => (
