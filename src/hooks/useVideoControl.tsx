@@ -36,31 +36,19 @@ export const useVideoControl = (videoUrl: string) => {
       
       console.log('Starting click handler sequence for:', videoUrl);
       
-      // Set state first
-      setIsMuted(false);
-      setIsPlaying(true);
-      
-      // Then handle this video's playback with proper sequencing
+      // Then handle this video's playback
       const playSequence = async () => {
-        console.log('1. Unmuting video');
+        // First unmute and set volume
         player.unMute();
-        
-        console.log('2. Setting volume to 100');
         player.setVolume(100);
+        setIsMuted(false);
         
-        // Give a longer delay to ensure unmute and volume changes take effect
-        await new Promise(resolve => setTimeout(resolve, 100));
+        // Small delay to ensure unmute takes effect
+        await new Promise(resolve => setTimeout(resolve, 50));
         
-        console.log('3. Playing video');
+        // Then play
         player.playVideo();
-        
-        console.log('4. Double checking mute state');
-        const isMuted = player.isMuted();
-        if (isMuted) {
-          console.log('Still muted, forcing unmute again');
-          player.unMute();
-          player.setVolume(100);
-        }
+        setIsPlaying(true);
       };
       
       playSequence();
