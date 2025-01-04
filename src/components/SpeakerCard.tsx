@@ -37,10 +37,11 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseLeave={() => {
         setIsHovering(false);
         if (player) {
+          console.log('Mouse left card, attempting to pause video');
           player.pauseVideo();
           player.mute();
-          setIsPlaying(false); // Add this line to update the playing state
-          console.log('Mouse left card, pausing video and muting');
+          setIsPlaying(false);
+          console.log('Video paused and muted, isPlaying set to false');
         }
       }}
       onClick={handleClick}
