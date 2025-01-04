@@ -19,21 +19,28 @@ export const VideoPlayer = ({
 }: VideoPlayerProps) => {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const [localPlayer, setLocalPlayer] = useState<any>(null);
 
   useEffect(() => {
     if (localPlayer) {
-      // Update progress every second while video is playing
       const interval = setInterval(() => {
-        const currentTime = localPlayer.getCurrentTime();
+        const current = localPlayer.getCurrentTime();
         const videoDuration = localPlayer.getDuration();
-        const progressPercentage = (currentTime / videoDuration) * 100;
+        const progressPercentage = (current / videoDuration) * 100;
         setProgress(progressPercentage);
+        setCurrentTime(current);
       }, 1000);
 
       return () => clearInterval(interval);
     }
   }, [localPlayer]);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  };
 
   const handleSliderChange = (value: number[]) => {
     if (localPlayer && duration) {
@@ -92,13 +99,16 @@ export const VideoPlayer = ({
           className="absolute inset-0 w-full h-full"
         />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-black/50">
+      <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-black/50 flex items-center gap-4">
+        <span className="text-white text-sm min-w-[80px]">
+          {formatTime(duration - currentTime)}
+        </span>
         <Slider
           value={[progress]}
           onValueChange={handleSliderChange}
           max={100}
           step={0.1}
-          className="w-full"
+          className="flex-1"
         />
       </div>
     </div>
