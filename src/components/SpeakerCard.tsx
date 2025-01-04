@@ -49,9 +49,20 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       <VideoPlayer
         videoUrl={videoUrl}
         onPlayerReady={(event) => {
-          console.log('Player ready, setting up initial state');
-          setPlayer(event.target);
-          event.target.mute();
+          console.log('Player ready event received');
+          const playerInstance = event.target;
+          if (playerInstance) {
+            console.log('Setting up player with initial state');
+            setPlayer(playerInstance);
+            // Set initial volume after a small delay to ensure player is ready
+            setTimeout(() => {
+              if (playerInstance) {
+                playerInstance.setVolume(100);
+                playerInstance.mute();
+                console.log('Initial player setup complete');
+              }
+            }, 100);
+          }
         }}
         isHovering={isHovering}
         isMuted={isMuted}
