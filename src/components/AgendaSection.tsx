@@ -1,4 +1,5 @@
 import { MapPin } from "lucide-react";
+import confetti from 'canvas-confetti';
 
 const AgendaSection = () => {
   const agenda = [
@@ -11,6 +12,15 @@ const AgendaSection = () => {
     { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
     { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
   ];
+
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#9b87f5', '#ffffff', '#F97316']
+    });
+  };
 
   return (
     <div className="container mx-auto px-4 py-12 bg-black/30 rounded-xl backdrop-blur-sm">
@@ -27,7 +37,11 @@ const AgendaSection = () => {
       </div>
       <div className="space-y-2">
         {agenda.map((item, index) => (
-          <div key={index} className="flex items-center gap-4 px-4 py-2 border-b border-white/10">
+          <div 
+            key={index} 
+            className="flex items-center gap-4 px-4 py-2 border-b border-white/10"
+            onMouseEnter={() => item.title === "Kahoot trivia with valuable prices!!!" && triggerConfetti()}
+          >
             <div className="text-2xl font-bold text-[#9b87f5] min-w-[80px]">{item.time}</div>
             <div className="text-white/20 font-bold">|</div>
             <div className="flex-grow">
