@@ -8,12 +8,50 @@ interface SpeakerInfo {
   videoUrl: string;
 }
 
-export const SpeakersGrid = ({ speakerInfo }: { speakerInfo: SpeakerInfo }) => {
+export const SpeakersGrid = () => {
+  const speakers: SpeakerInfo[] = [
+    {
+      name: "אורי הוסיט",
+      title: "Modern Work Specialists Manager",
+      topic: "copilot 365",
+      company: "Microsoft",
+      videoUrl: "L38GrkE3H3A"
+    },
+    {
+      name: "רונן ארנרייך",
+      title: "CX Specialist",
+      topic: "copilot sales & marketing",
+      company: "Microsoft",
+      videoUrl: "o1jWS8LeCIA"
+    },
+    {
+      name: "רונן ארנרייך",
+      title: "CX Specialist",
+      topic: "copilot sales & marketing",
+      company: "Microsoft",
+      videoUrl: "o1jWS8LeCIA"
+    },
+    {
+      name: "רונן ארנרייך",
+      title: "CX Specialist",
+      topic: "copilot sales & marketing",
+      company: "Microsoft",
+      videoUrl: "o1jWS8LeCIA"
+    },
+    {
+      name: "רונן ארנרייך",
+      title: "CX Specialist",
+      topic: "copilot sales & marketing",
+      company: "Microsoft",
+      videoUrl: "o1jWS8LeCIA"
+    }
+  ];
+
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-        {[...Array(5)].map((_, index) => (
-          <SpeakerCard key={index} {...speakerInfo} />
+        {speakers.map((speaker, index) => (
+          <SpeakerCard key={index} {...speaker} />
         ))}
       </div>
     </div>

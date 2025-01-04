@@ -4,14 +4,6 @@ import RegistrationForm from '@/components/RegistrationForm';
 import AgendaSection from '@/components/AgendaSection';
 
 const Index = () => {
-  const speakerInfo = {
-    name: "אורי הוסיט",
-    title: "Modern Work Specialists Manager",
-    topic: "copilot 365",
-    company: "Microsoft",
-    videoUrl: "L38GrkE3H3A"
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1A1F2C] to-[#2D3748] text-white rtl">
       <HeroSection />
@@ -24,7 +16,7 @@ const Index = () => {
         </h1>
       </div>
 
-      <SpeakersGrid speakerInfo={speakerInfo} />
+      <SpeakersGrid />
       <AgendaSection />
 
       {/* Registration Form */}
