@@ -77,7 +77,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseLeave={() => {
         setIsHovering(false);
         if (player && isMuted) {
-          player.mute();
+          player.pauseVideo();
           setIsPlaying(false);
         }
       }}
