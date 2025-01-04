@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-// Create a simple event system to coordinate between cards
 const videoEvents = new EventTarget();
 
 export const useVideoControl = (videoUrl: string) => {
@@ -28,31 +27,42 @@ export const useVideoControl = (videoUrl: string) => {
   }, [player, videoUrl]);
 
   const handleClick = () => {
-    if (player) {
-      // First, dispatch event to pause other videos
-      videoEvents.dispatchEvent(
-        new CustomEvent('cardPlayed', { detail: { videoUrl } })
-      );
-      
-      console.log('Starting click handler sequence for:', videoUrl);
-      
-      // Then handle this video's playback
-      const playSequence = async () => {
-        // First unmute and set volume
-        player.unMute();
-        player.setVolume(100);
-        setIsMuted(false);
-        
-        // Small delay to ensure unmute takes effect
-        await new Promise(resolve => setTimeout(resolve, 50));
-        
-        // Then play
+    if (!player) return;
+
+    console.log('Starting click handler for video:', videoUrl);
+    
+    // Notify other videos to pause
+    videoEvents.dispatchEvent(
+      new CustomEvent('cardPlayed', { detail: { videoUrl } })
+    );
+
+    const setupAudio = async () => {
+      try {
+        // First ensure video is playing
         player.playVideo();
+        
+        // Set volume to 100 before unmuting
+        player.setVolume(100);
+        console.log('Volume set to:', player.getVolume());
+        
+        // Small delay to ensure volume is set
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // Unmute and update state
+        player.unMute();
+        console.log('Player unmuted, isMuted state:', player.isMuted());
+        setIsMuted(false);
         setIsPlaying(true);
-      };
-      
-      playSequence();
-    }
+        
+        // Force a volume update
+        player.setVolume(100);
+        console.log('Final volume check:', player.getVolume());
+      } catch (error) {
+        console.error('Error in setupAudio:', error);
+      }
+    };
+
+    setupAudio();
   };
 
   const handleVideoEnd = () => {

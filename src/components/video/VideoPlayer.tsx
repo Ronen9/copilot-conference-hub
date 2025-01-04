@@ -15,7 +15,7 @@ export const VideoPlayer = ({
   isMuted,
   onVideoEnd 
 }: VideoPlayerProps) => {
-  console.log('VideoPlayer render, isMuted:', isMuted);
+  console.log('VideoPlayer render for:', videoUrl, 'isMuted:', isMuted);
   
   return (
     <div className="aspect-video w-full">
@@ -31,9 +31,15 @@ export const VideoPlayer = ({
             showinfo: 0,
             rel: 0,
             playsinline: 1,
+            iv_load_policy: 3,
+            modestbranding: 1,
+            volume: 100
           },
         }}
-        onReady={onPlayerReady}
+        onReady={(event) => {
+          event.target.setVolume(100);
+          onPlayerReady(event.target);
+        }}
         onEnd={onVideoEnd}
         className="w-full h-full"
       />
