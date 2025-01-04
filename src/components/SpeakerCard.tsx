@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 
 interface SpeakerCardProps {
@@ -9,14 +9,37 @@ interface SpeakerCardProps {
   videoUrl: string;
 }
 
+// Create a simple event system to coordinate between cards
+const videoEvents = new EventTarget();
+
 const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  useEffect(() => {
+    // Listen for other cards being played
+    const handleOtherCardPlay = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail.videoUrl !== videoUrl && player) {
+        player.pauseVideo();
+        player.mute();
+        setIsMuted(true);
+        setIsPlaying(false);
+      }
+    };
+
+    videoEvents.addEventListener('cardPlayed', handleOtherCardPlay);
+    return () => {
+      videoEvents.removeEventListener('cardPlayed', handleOtherCardPlay);
+    };
+  }, [player, videoUrl]);
+
   const handleReady = (event: any) => {
     setPlayer(event.target);
+    // Start muted by default
+    event.target.mute();
   };
 
   const handleVideoEnd = () => {
@@ -31,11 +54,16 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
   const handleClick = () => {
     if (player) {
       if (isMuted) {
+        // Notify other cards to stop
+        videoEvents.dispatchEvent(
+          new CustomEvent('cardPlayed', { detail: { videoUrl } })
+        );
         player.unMute();
         player.playVideo();
         setIsPlaying(true);
       } else {
         player.mute();
+        player.pauseVideo();
         setIsPlaying(false);
       }
       setIsMuted(!isMuted);
@@ -48,9 +76,8 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
-        if (player) {
+        if (player && isMuted) {
           player.mute();
-          setIsMuted(true);
           setIsPlaying(false);
         }
       }}
