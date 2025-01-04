@@ -33,8 +33,6 @@ export const VideoPlayer = ({
             rel: 0, // Prevents showing related videos
             playsinline: 1,
             origin: window.location.origin,
-            loop: 1, // Enable looping
-            playlist: videoUrl, // Required for looping to work
             endscreen: 0 // Disable end screen
           },
         }}

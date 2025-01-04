@@ -48,9 +48,8 @@ export const useVideoControl = (videoUrl: string) => {
   const handleVideoEnd = () => {
     if (player) {
       player.seekTo(0);
-      if (!isMuted) {
-        player.playVideo();
-      }
+      player.pauseVideo();
+      setIsPlaying(false);
     }
   };
 
