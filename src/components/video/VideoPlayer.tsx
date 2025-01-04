@@ -28,7 +28,7 @@ export const VideoPlayer = ({
           playerVars: {
             autoplay: isHovering ? 1 : 0,
             controls: 0,
-            mute: 0, // Changed from 1 to 0 to allow initial audio
+            mute: 1, // Set initial mute state to 1 to ensure player starts muted
             showinfo: 0,
             rel: 0,
             playsinline: 1,
@@ -36,11 +36,15 @@ export const VideoPlayer = ({
           },
         }}
         onReady={(event) => {
-          const player = event.target;
-          // Set initial volume
-          player.setVolume(100);
-          console.log('Player ready, setting initial volume:', player.getVolume());
-          onPlayerReady(player);
+          if (event.target) {
+            const player = event.target;
+            // Ensure player is ready before setting volume
+            setTimeout(() => {
+              player.setVolume(100);
+              console.log('Player ready, setting initial volume:', player.getVolume());
+              onPlayerReady(player);
+            }, 100);
+          }
         }}
         onEnd={onVideoEnd}
         className="w-full h-full"
