@@ -25,11 +25,11 @@ export const SpeakersGrid = () => {
       videoUrl: "o1jWS8LeCIA"
     },
     {
-      name: "אריק בינדי",
-      title: "Sr. Technology Specialist, Digital-Native",
-      topic: "github copilot",
+      name: "אלכס יורפולסקי",
+      title: "Technical CRM Specialist, BizApps",
+      topic: "copilot service",
       company: "Microsoft",
-      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
+      videoUrl: "https://media.licdn.com/dms/image/v2/C4E03AQHcEYPiVBzqEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1636529606346?e=1741219200&v=beta&t=IYJceSXb-zg8hO1gPD34vwS78xluep_-pQIKmYOd0YY"
     },
     {
       name: "עדי לייבוביץ",
@@ -39,11 +39,11 @@ export const SpeakersGrid = () => {
       videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641231836048?e=1741219200&v=beta&t=5jEMd4hge0tEfcT2dR91TbUt3QKQ2pdM9WoHQWQL8jg"
     },
     {
-      name: "אלכס יורפולסקי",
-      title: "Technical CRM Specialist, BizApps",
-      topic: "copilot service",
+      name: "אריק בינדי",
+      title: "Sr. Technology Specialist, Digital-Native",
+      topic: "github copilot",
       company: "Microsoft",
-      videoUrl: "https://media.licdn.com/dms/image/v2/C4E03AQHcEYPiVBzqEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1636529606346?e=1741219200&v=beta&t=IYJceSXb-zg8hO1gPD34vwS78xluep_-pQIKmYOd0YY"
+      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
     }
   ];
 
