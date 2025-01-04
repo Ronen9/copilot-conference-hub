@@ -41,7 +41,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
           <img 
             src={videoUrl} 
             alt={name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
           />
         ) : (
           <VideoPlayer
