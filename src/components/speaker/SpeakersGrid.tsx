@@ -32,11 +32,11 @@ export const SpeakersGrid = () => {
       videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
     },
     {
-      name: "רונן ארנרייך",
-      title: "CX Specialist",
-      topic: "copilot sales & marketing",
+      name: "עדי לייבוביץ",
+      title: "Senior Program Manager",
+      topic: "copilot studio",
       company: "Microsoft",
-      videoUrl: "o1jWS8LeCIA"
+      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1641231836048?e=1741219200&v=beta&t=hj3PXC00cEk9-moEDxBD5elQ9DNmy4o9m70KGLh5Q8Y"
     },
     {
       name: "רונן ארנרייך",
