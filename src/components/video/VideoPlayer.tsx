@@ -19,10 +19,8 @@ export const VideoPlayer = ({
   
   const handleReady = (event: any) => {
     const player = event.target;
-    // Initialize player with full volume
     player.setVolume(100);
     console.log('Player ready, setting initial volume:', player.getVolume());
-    // Pass the initialized player up
     onPlayerReady(player);
   };
 
@@ -41,8 +39,7 @@ export const VideoPlayer = ({
             rel: 0,
             playsinline: 1,
             iv_load_policy: 3,
-            modestbranding: 1,
-            volume: 100
+            modestbranding: 1
           },
         }}
         onReady={handleReady}

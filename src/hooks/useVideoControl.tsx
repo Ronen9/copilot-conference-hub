@@ -7,6 +7,7 @@ export const useVideoControl = (videoUrl: string) => {
   const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(100);
 
   useEffect(() => {
     const handleOtherCardPlay = (e: Event) => {
@@ -31,47 +32,51 @@ export const useVideoControl = (videoUrl: string) => {
 
     console.log('Starting click handler for video:', videoUrl);
     
-    // Notify other videos to pause
     videoEvents.dispatchEvent(
       new CustomEvent('cardPlayed', { detail: { videoUrl } })
     );
 
     const setupAudio = async () => {
       try {
-        // First ensure video is playing and volume is set
         player.playVideo();
+        player.setVolume(volume);
+        console.log('Initial volume set to:', volume);
         
-        // Set initial volume
-        player.setVolume(100);
-        console.log('Initial volume set to:', player.getVolume());
-        
-        // Small delay before unmuting
         await new Promise(resolve => setTimeout(resolve, 50));
         
-        // Unmute and verify
         player.unMute();
         console.log('Player unmuted, checking mute state:', player.isMuted());
         
-        // Set volume again after unmuting
-        player.setVolume(100);
-        console.log('Volume after unmute:', player.getVolume());
-        
-        // Update state
         setIsMuted(false);
         setIsPlaying(true);
-        
-        // Final volume check and set
-        const currentVolume = player.getVolume();
-        if (currentVolume !== 100) {
-          console.log('Volume not at 100, setting again. Current:', currentVolume);
-          player.setVolume(100);
-        }
       } catch (error) {
         console.error('Error in setupAudio:', error);
       }
     };
 
     setupAudio();
+  };
+
+  const handleVolumeChange = (newVolume: number) => {
+    if (player) {
+      console.log('Setting volume to:', newVolume);
+      player.setVolume(newVolume);
+      setVolume(newVolume);
+    }
+  };
+
+  const toggleMute = () => {
+    if (player) {
+      if (isMuted) {
+        player.unMute();
+        player.setVolume(volume);
+        console.log('Unmuting, volume set to:', volume);
+      } else {
+        player.mute();
+        console.log('Muting video');
+      }
+      setIsMuted(!isMuted);
+    }
   };
 
   const handleVideoEnd = () => {
@@ -89,8 +94,11 @@ export const useVideoControl = (videoUrl: string) => {
     isMuted,
     player,
     isPlaying,
+    volume,
     handleClick,
     handleVideoEnd,
+    handleVolumeChange,
+    toggleMute,
     setPlayer
   };
 };
