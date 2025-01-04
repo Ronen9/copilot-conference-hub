@@ -42,7 +42,7 @@ export const VideoPlayer = ({
             loop: 0,
             showsearch: 0,
             ecver: 2,
-            playlist: 0 // Disable playlist
+            playlist: videoUrl // Set playlist to videoUrl to ensure proper playback
           },
         }}
         onReady={(event) => {
