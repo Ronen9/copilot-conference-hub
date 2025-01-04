@@ -29,16 +29,18 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseEnter={() => {
         setIsHovering(true);
         if (player && !isPlaying) {
+          player.mute();
           player.playVideo();
-          console.log('Mouse entered card, playing video');
+          console.log('Mouse entered card, playing muted video');
         }
       }}
       onMouseLeave={() => {
         setIsHovering(false);
         if (player) {
           player.pauseVideo();
-          setIsPlaying(false);
-          console.log('Mouse left card, pausing video');
+          player.mute();
+          setIsPlaying(false); // Add this line to update the playing state
+          console.log('Mouse left card, pausing video and muting');
         }
       }}
       onClick={handleClick}
@@ -47,7 +49,8 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
         videoUrl={videoUrl}
         onPlayerReady={(event) => {
           console.log('Player ready, setting up initial state');
-          setPlayer(event);
+          setPlayer(event.target);
+          event.target.mute();
         }}
         isHovering={isHovering}
         isMuted={isMuted}
