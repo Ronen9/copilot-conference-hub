@@ -42,9 +42,9 @@ export const VideoPlayer = ({
             loop: 0,
             showsearch: 0,
             ecver: 2,
-            playlist: videoUrl, // Set playlist to videoUrl to ensure proper playback
-            related: 0, // Disable related videos
-            annotations: 0 // Disable annotations
+            playlist: videoUrl,
+            related: 0,
+            annotations: 0
           },
         }}
         onReady={(event) => {
@@ -54,7 +54,13 @@ export const VideoPlayer = ({
           console.log('Player ready, setting initial volume:', player.getVolume());
           onPlayerReady(player);
         }}
-        onEnd={onVideoEnd}
+        onEnd={(event) => {
+          console.log('Video ended, rewinding and pausing');
+          const player = event.target;
+          player.seekTo(0);
+          player.pauseVideo();
+          onVideoEnd();
+        }}
         className="w-full h-full"
       />
     </div>
