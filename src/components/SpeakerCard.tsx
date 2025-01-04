@@ -27,7 +27,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       className="relative rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer"
       onMouseEnter={() => {
         setIsHovering(true);
-        if (player && !isPlaying && typeof player.playVideo === 'function') {
+        if (player && !isPlaying) {
           player.mute();
           player.playVideo();
           console.log('Mouse entered card, playing muted video');
@@ -35,7 +35,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       }}
       onMouseLeave={() => {
         setIsHovering(false);
-        if (player && typeof player.pauseVideo === 'function') {
+        if (player) {
           player.pauseVideo();
           player.mute();
           console.log('Mouse left card, pausing video and muting');
@@ -45,14 +45,10 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
     >
       <VideoPlayer
         videoUrl={videoUrl}
-        onPlayerReady={(player) => {
+        onPlayerReady={(event) => {
           console.log('Player ready, setting up initial state');
-          if (player && typeof player.mute === 'function') {
-            setPlayer(player);
-            player.mute();
-          } else {
-            console.error('Invalid player object received');
-          }
+          setPlayer(event.target);
+          event.target.mute();
         }}
         isHovering={isHovering}
         isMuted={isMuted}
