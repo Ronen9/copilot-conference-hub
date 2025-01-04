@@ -44,6 +44,13 @@ export const SpeakersGrid = () => {
       topic: "github copilot",
       company: "Microsoft",
       videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
+    },
+    {
+      name: "יובל אבידני",
+      title: "Senior Data & ML Scientist | AI Community Founder",
+      topic: "AI most popular productivity tools",
+      company: "Lusha",
+      videoUrl: "https://media.licdn.com/dms/image/v2/D4D03AQH0y1xC0sUsMQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730013126859?e=1741219200&v=beta&t=shvlsXG3vphofnRrv836kjJeKvcnYiYst2A31u_rtHI"
     }
   ];
 
