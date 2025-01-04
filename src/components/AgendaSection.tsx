@@ -12,6 +12,11 @@ const AgendaSection = () => {
 
   return (
     <div className="container mx-auto px-4 py-12 bg-black/30 rounded-xl backdrop-blur-sm">
+      <div className="text-xl text-[#9b87f5] mb-8 text-center">
+        <span>5.3.25</span>
+        <span className="mx-2 text-white/20">|</span>
+        <span>אלן טיורינג 3, הרצליה</span>
+      </div>
       <h2 className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">לוח זמנים</h2>
       <div className="space-y-2">
         {agenda.map((item, index) => (
