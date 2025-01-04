@@ -26,7 +26,7 @@ export const VideoPlayer = ({
           playerVars: {
             autoplay: isHovering ? 1 : 0,
             controls: 0,
-            mute: 1,
+            mute: isMuted ? 1 : 0,
             showinfo: 0,
             rel: 0,
             playsinline: 1,
