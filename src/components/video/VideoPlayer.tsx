@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 
 interface VideoPlayerProps {
@@ -12,18 +13,9 @@ export const VideoPlayer = ({
   videoUrl, 
   onPlayerReady, 
   isHovering, 
-  isMuted,
+  isMuted, 
   onVideoEnd 
 }: VideoPlayerProps) => {
-  console.log('VideoPlayer render for:', videoUrl, 'isMuted:', isMuted);
-  
-  const handleReady = (event: any) => {
-    const player = event.target;
-    player.setVolume(100);
-    console.log('Player ready, setting initial volume:', player.getVolume());
-    onPlayerReady(player);
-  };
-
   return (
     <div className="aspect-video w-full">
       <YouTube
@@ -34,16 +26,13 @@ export const VideoPlayer = ({
           playerVars: {
             autoplay: isHovering ? 1 : 0,
             controls: 0,
-            mute: isMuted ? 1 : 0,
+            mute: 1,
             showinfo: 0,
             rel: 0,
-            loop: 1,
             playsinline: 1,
-            iv_load_policy: 3,
-            modestbranding: 1
           },
         }}
-        onReady={handleReady}
+        onReady={onPlayerReady}
         onEnd={onVideoEnd}
         className="w-full h-full"
       />
