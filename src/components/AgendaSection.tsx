@@ -40,12 +40,14 @@ const AgendaSection = () => {
           <div 
             key={index} 
             className="flex items-center gap-4 px-4 py-2 border-b border-white/10"
-            onMouseEnter={() => item.title === "Kahoot trivia with valuable prices!!!" && triggerConfetti()}
           >
             <div className="text-2xl font-bold text-[#9b87f5] min-w-[80px]">{item.time}</div>
             <div className="text-white/20 font-bold">|</div>
             <div className="flex-grow">
-              <span className={`text-lg font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}>
+              <span 
+                className={`text-lg font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}
+                onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
+              >
                 {item.title}
               </span>
               {item.speaker && (
