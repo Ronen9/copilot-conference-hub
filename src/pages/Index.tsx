@@ -9,7 +9,7 @@ const Index = () => {
     title: "CX Specialist",
     topic: "copilot sales & marketing",
     company: "Microsoft",
-    videoUrl: "RYSQe4KkJkI"
+    videoUrl: "o1jWS8LeCIA"  // Updated video ID
   };
 
   return (
