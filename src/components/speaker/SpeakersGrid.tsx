@@ -25,11 +25,11 @@ export const SpeakersGrid = () => {
       videoUrl: "o1jWS8LeCIA"
     },
     {
-      name: "רונן ארנרייך",
-      title: "CX Specialist",
-      topic: "copilot sales & marketing",
+      name: "Arik Bidny",
+      title: "Sr. Technology Specialist, Digital-Native",
+      topic: "github copilot",
       company: "Microsoft",
-      videoUrl: "o1jWS8LeCIA"
+      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
     },
     {
       name: "רונן ארנרייך",
