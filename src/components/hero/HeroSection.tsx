@@ -56,7 +56,7 @@ export const HeroSection = () => {
           onReady={handleReady}
           className="absolute inset-0 w-full h-full"
         />
-        <div className="absolute bottom-4 right-4 flex gap-2">
+        <div className="absolute bottom-16 right-4 flex gap-2">
           <Button
             variant="ghost"
             size="icon"
