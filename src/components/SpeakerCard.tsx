@@ -12,6 +12,29 @@ interface SpeakerCardProps {
 const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [player, setPlayer] = useState<any>(null);
+
+  const handleReady = (event: any) => {
+    setPlayer(event.target);
+  };
+
+  const handleVideoEnd = () => {
+    if (player) {
+      player.seekTo(0);
+    }
+  };
+
+  const handleClick = () => {
+    if (player) {
+      if (isMuted) {
+        player.unMute();
+        player.playVideo();
+      } else {
+        player.mute();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
 
   return (
     <div
@@ -19,9 +42,12 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
-        setIsMuted(true);
+        if (player) {
+          player.mute();
+          setIsMuted(true);
+        }
       }}
-      onClick={() => setIsMuted(!isMuted)}
+      onClick={handleClick}
     >
       <div className="aspect-video w-full">
         <YouTube
@@ -32,11 +58,14 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
             playerVars: {
               autoplay: isHovering ? 1 : 0,
               controls: 0,
-              mute: isMuted ? 1 : 0,
+              mute: 1,
               showinfo: 0,
               rel: 0,
+              playsinline: 1,
             },
           }}
+          onReady={handleReady}
+          onEnd={handleVideoEnd}
           className="w-full h-full"
         />
       </div>

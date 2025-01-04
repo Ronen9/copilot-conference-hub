@@ -40,7 +40,7 @@ const Index = () => {
       <div className="relative h-[60vh] w-full">
         <div className="absolute inset-0 overflow-hidden">
           <YouTube
-            videoId="l4B1UflAty8"
+            videoId="SaCVSUbYpVc"
             opts={{
               height: '100%',
               width: '100%',
@@ -51,7 +51,7 @@ const Index = () => {
                 showinfo: 0,
                 rel: 0,
                 loop: 1,
-                playlist: 'l4B1UflAty8'
+                playlist: 'SaCVSUbYpVc'
               },
             }}
             onReady={handleReady}
