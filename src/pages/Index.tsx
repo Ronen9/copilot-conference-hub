@@ -1,11 +1,97 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import YouTube from 'react-youtube';
+import { Volume2, VolumeX } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import SpeakerCard from '@/components/SpeakerCard';
+import RegistrationForm from '@/components/RegistrationForm';
+import AgendaSection from '@/components/AgendaSection';
 
 const Index = () => {
+  const [isMuted, setIsMuted] = useState(true);
+  const [player, setPlayer] = useState<any>(null);
+
+  const speakerInfo = {
+    name: "רונן ארנרייך",
+    title: "CX Specialist",
+    topic: "copilot sales & marketing",
+    company: "Microsoft",
+    videoUrl: "RYSQe4KkJkI"
+  };
+
+  const handleReady = (event: any) => {
+    setPlayer(event.target);
+    event.target.playVideo();
+  };
+
+  const toggleMute = () => {
+    if (player) {
+      if (isMuted) {
+        player.unMute();
+      } else {
+        player.mute();
+      }
+      setIsMuted(!isMuted);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gradient-to-b from-[#1A1F2C] to-[#2D3748] text-white rtl">
+      {/* Hero Section */}
+      <div className="relative h-[60vh] w-full">
+        <div className="absolute inset-0 overflow-hidden">
+          <YouTube
+            videoId="l4B1UflAty8"
+            opts={{
+              height: '100%',
+              width: '100%',
+              playerVars: {
+                autoplay: 1,
+                mute: 1,
+                controls: 0,
+                showinfo: 0,
+                rel: 0,
+                loop: 1,
+                playlist: 'l4B1UflAty8'
+              },
+            }}
+            onReady={handleReady}
+            className="absolute inset-0 w-full h-full"
+          />
+          <div className="absolute bottom-4 right-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleMute}
+              className="bg-black/50 hover:bg-black/70"
+            >
+              {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Title Section */}
+      <div className="container mx-auto px-4 py-12 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 text-[#9b87f5]">
+          דור חדש של פרודוקטיביות: קופיילוט בשירות העובד המודרני
+        </h1>
+      </div>
+
+      {/* Speakers Grid */}
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(5)].map((_, index) => (
+            <SpeakerCard key={index} {...speakerInfo} />
+          ))}
+        </div>
+      </div>
+
+      {/* Agenda Section */}
+      <AgendaSection />
+
+      {/* Registration Form */}
+      <div className="container mx-auto px-4 py-12">
+        <RegistrationForm />
       </div>
     </div>
   );
