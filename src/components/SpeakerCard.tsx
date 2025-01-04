@@ -13,6 +13,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
   const [isHovering, setIsHovering] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [player, setPlayer] = useState<any>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handleReady = (event: any) => {
     setPlayer(event.target);
@@ -21,6 +22,9 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
   const handleVideoEnd = () => {
     if (player) {
       player.seekTo(0);
+      if (!isMuted) {
+        player.playVideo();
+      }
     }
   };
 
@@ -29,8 +33,10 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       if (isMuted) {
         player.unMute();
         player.playVideo();
+        setIsPlaying(true);
       } else {
         player.mute();
+        setIsPlaying(false);
       }
       setIsMuted(!isMuted);
     }
@@ -45,6 +51,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
         if (player) {
           player.mute();
           setIsMuted(true);
+          setIsPlaying(false);
         }
       }}
       onClick={handleClick}

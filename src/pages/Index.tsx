@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import YouTube from 'react-youtube';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Pause, Play } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import SpeakerCard from '@/components/SpeakerCard';
 import RegistrationForm from '@/components/RegistrationForm';
@@ -8,6 +8,7 @@ import AgendaSection from '@/components/AgendaSection';
 
 const Index = () => {
   const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [player, setPlayer] = useState<any>(null);
 
   const speakerInfo = {
@@ -34,6 +35,17 @@ const Index = () => {
     }
   };
 
+  const togglePlayPause = () => {
+    if (player) {
+      if (isPlaying) {
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#1A1F2C] to-[#2D3748] text-white rtl">
       {/* Hero Section */}
@@ -57,7 +69,7 @@ const Index = () => {
             onReady={handleReady}
             className="absolute inset-0 w-full h-full"
           />
-          <div className="absolute bottom-4 right-4">
+          <div className="absolute bottom-4 right-4 flex gap-2">
             <Button
               variant="ghost"
               size="icon"
@@ -65,6 +77,14 @@ const Index = () => {
               className="bg-black/50 hover:bg-black/70"
             >
               {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={togglePlayPause}
+              className="bg-black/50 hover:bg-black/70"
+            >
+              {isPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
             </Button>
           </div>
         </div>
