@@ -31,7 +31,10 @@ const RegistrationForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-2">שם מלא</label>
+            <label className="block text-sm font-medium mb-2">
+              שם מלא
+              <span className="text-[#ea384c] mr-1">*</span>
+            </label>
             <Input
               name="name"
               value={formData.name}
@@ -43,7 +46,10 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">אימייל</label>
+            <label className="block text-sm font-medium mb-2">
+              אימייל
+              <span className="text-[#ea384c] mr-1">*</span>
+            </label>
             <Input
               type="email"
               name="email"
@@ -56,7 +62,10 @@ const RegistrationForm = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium mb-2">טלפון</label>
+            <label className="block text-sm font-medium mb-2">
+              טלפון
+              <span className="text-[#ea384c] mr-1">*</span>
+            </label>
             <Input
               type="tel"
               name="phone"

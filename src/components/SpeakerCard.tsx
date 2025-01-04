@@ -11,12 +11,17 @@ interface SpeakerCardProps {
 
 const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps) => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   return (
     <div
-      className="relative rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+      className="relative rounded-xl overflow-hidden bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 cursor-pointer"
       onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseLeave={() => {
+        setIsHovering(false);
+        setIsMuted(true);
+      }}
+      onClick={() => setIsMuted(!isMuted)}
     >
       <div className="aspect-video w-full">
         <YouTube
@@ -27,7 +32,7 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
             playerVars: {
               autoplay: isHovering ? 1 : 0,
               controls: 0,
-              mute: 1,
+              mute: isMuted ? 1 : 0,
               showinfo: 0,
               rel: 0,
             },

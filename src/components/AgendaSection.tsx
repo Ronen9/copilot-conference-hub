@@ -17,7 +17,7 @@ const AgendaSection = () => {
         {agenda.map((item, index) => (
           <div key={index} className="flex items-center justify-between p-4 border-b border-white/10">
             <div className="text-right flex-grow">
-              <h3 className="text-xl font-semibold">{item.title}</h3>
+              <h3 className={`text-xl font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}>{item.title}</h3>
               {item.speaker && <p className="text-[#9b87f5]">{item.speaker}</p>}
             </div>
             <div className="text-2xl font-bold text-[#9b87f5] mr-4">{item.time}</div>
