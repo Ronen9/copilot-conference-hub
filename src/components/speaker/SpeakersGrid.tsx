@@ -25,7 +25,7 @@ export const SpeakersGrid = () => {
       videoUrl: "o1jWS8LeCIA"
     },
     {
-      name: "Arik Bidny",
+      name: "אריק בינדי",
       title: "Sr. Technology Specialist, Digital-Native",
       topic: "github copilot",
       company: "Microsoft",
