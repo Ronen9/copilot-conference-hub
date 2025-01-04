@@ -13,6 +13,7 @@ export const useVideoControl = (videoUrl: string) => {
     const handleOtherCardPlay = (e: Event) => {
       const customEvent = e as CustomEvent;
       if (customEvent.detail.videoUrl !== videoUrl && player) {
+        console.log('Pausing other video:', videoUrl);
         player.pauseVideo();
         player.mute();
         setIsMuted(true);
@@ -33,21 +34,36 @@ export const useVideoControl = (videoUrl: string) => {
         new CustomEvent('cardPlayed', { detail: { videoUrl } })
       );
       
-      // Then handle this video's playback
-      console.log('Handling click - current mute state:', isMuted);
+      console.log('Starting click handler sequence for:', videoUrl);
       
-      // Ensure we unmute and set volume before playing
-      player.unMute();
-      player.setVolume(100);
-      
-      // Small delay to ensure unmute takes effect
-      setTimeout(() => {
-        player.playVideo();
-        console.log('Playing video with sound');
-      }, 50);
-      
+      // Set state first
       setIsMuted(false);
       setIsPlaying(true);
+      
+      // Then handle this video's playback with proper sequencing
+      const playSequence = async () => {
+        console.log('1. Unmuting video');
+        player.unMute();
+        
+        console.log('2. Setting volume to 100');
+        player.setVolume(100);
+        
+        // Give a longer delay to ensure unmute and volume changes take effect
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        console.log('3. Playing video');
+        player.playVideo();
+        
+        console.log('4. Double checking mute state');
+        const isMuted = player.isMuted();
+        if (isMuted) {
+          console.log('Still muted, forcing unmute again');
+          player.unMute();
+          player.setVolume(100);
+        }
+      };
+      
+      playSequence();
     }
   };
 
