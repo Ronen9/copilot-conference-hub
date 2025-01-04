@@ -5,11 +5,11 @@ import AgendaSection from '@/components/AgendaSection';
 
 const Index = () => {
   const speakerInfo = {
-    name: "אורי הוסיט",
-    title: "Modern Work Specialists Manager",
-    topic: "copilot 365",
+    name: "רונן ארנרייך",
+    title: "CX Specialist",
+    topic: "copilot sales & marketing",
     company: "Microsoft",
-    videoUrl: "L38GrkE3H3A"  // Updated video ID from the full URL
+    videoUrl: "o1jWS8LeCIA"  // Updated video ID
   };
 
   return (
