@@ -32,10 +32,15 @@ export const useVideoControl = (videoUrl: string) => {
         new CustomEvent('cardPlayed', { detail: { videoUrl } })
       );
       
-      player.unMute();
-      player.setVolume(100);
+      // Add a small delay before unmuting and setting volume
+      setTimeout(() => {
+        player.unMute();
+        player.setVolume(100);
+        console.log('Unmuting and setting volume after delay');
+        setIsMuted(false);
+      }, 100);
+
       player.playVideo();
-      setIsMuted(false);
       setIsPlaying(true);
     }
   };
