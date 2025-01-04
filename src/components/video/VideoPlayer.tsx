@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 
 interface VideoPlayerProps {
   videoUrl: string;
   onPlayerReady: (player: any) => void;
-  isHovering: boolean;
   isMuted: boolean;
   onVideoEnd: () => void;
 }
@@ -12,10 +10,11 @@ interface VideoPlayerProps {
 export const VideoPlayer = ({ 
   videoUrl, 
   onPlayerReady, 
-  isHovering, 
-  isMuted, 
+  isMuted,
   onVideoEnd 
 }: VideoPlayerProps) => {
+  console.log('VideoPlayer render, isMuted:', isMuted);
+  
   return (
     <div className="aspect-video w-full">
       <YouTube
@@ -24,7 +23,7 @@ export const VideoPlayer = ({
           height: '100%',
           width: '100%',
           playerVars: {
-            autoplay: isHovering ? 1 : 0,
+            autoplay: 0,
             controls: 0,
             mute: isMuted ? 1 : 0,
             showinfo: 0,
