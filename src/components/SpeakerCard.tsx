@@ -28,8 +28,10 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => {
         setIsHovering(false);
-        if (player && isMuted) {
+        if (player) {
           player.pauseVideo();
+          player.mute();
+          console.log('Mouse left card, pausing video and muting');
         }
       }}
       onClick={handleClick}
