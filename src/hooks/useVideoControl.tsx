@@ -13,6 +13,7 @@ export const useVideoControl = (videoUrl: string) => {
     const handleOtherCardPlay = (e: Event) => {
       const customEvent = e as CustomEvent;
       if (customEvent.detail.videoUrl !== videoUrl && player) {
+        console.log('Another card is playing, stopping this video:', videoUrl);
         player.pauseVideo();
         player.mute();
         setIsMuted(true);
@@ -28,6 +29,7 @@ export const useVideoControl = (videoUrl: string) => {
 
   const handleClick = () => {
     if (player) {
+      console.log('Card clicked, playing video:', videoUrl);
       videoEvents.dispatchEvent(
         new CustomEvent('cardPlayed', { detail: { videoUrl } })
       );
