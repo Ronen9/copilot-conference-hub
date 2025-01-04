@@ -52,21 +52,17 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
 
   const handleClick = () => {
     if (player) {
-      if (isMuted) {
-        // Notify other cards to stop
-        videoEvents.dispatchEvent(
-          new CustomEvent('cardPlayed', { detail: { videoUrl } })
-        );
-        player.unMute();
-        player.setVolume(100); // Ensure volume is at maximum
-        player.playVideo();
-        setIsPlaying(true);
-      } else {
-        player.mute();
-        player.pauseVideo();
-        setIsPlaying(false);
-      }
-      setIsMuted(!isMuted);
+      // Notify other cards to stop
+      videoEvents.dispatchEvent(
+        new CustomEvent('cardPlayed', { detail: { videoUrl } })
+      );
+      
+      // Always unmute and play when clicked
+      player.unMute();
+      player.setVolume(100);
+      player.playVideo();
+      setIsMuted(false);
+      setIsPlaying(true);
     }
   };
 
