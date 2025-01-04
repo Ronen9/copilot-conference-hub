@@ -48,9 +48,11 @@ const SpeakerCard = ({ name, title, topic, company, videoUrl }: SpeakerCardProps
       <VideoPlayer
         videoUrl={videoUrl}
         onPlayerReady={(event) => {
-          console.log('Player ready, setting up initial state');
-          setPlayer(event.target);
-          event.target.mute();
+          if (event?.target) {
+            console.log('Player ready, setting up initial state');
+            setPlayer(event.target);
+            event.target.mute();
+          }
         }}
         isHovering={isHovering}
         isMuted={isMuted}

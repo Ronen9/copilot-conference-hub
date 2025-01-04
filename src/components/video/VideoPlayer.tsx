@@ -36,11 +36,13 @@ export const VideoPlayer = ({
           },
         }}
         onReady={(event) => {
-          const player = event.target;
-          // Set initial volume
-          player.setVolume(100);
-          console.log('Player ready, setting initial volume:', player.getVolume());
-          onPlayerReady(player);
+          if (event?.target) {
+            const player = event.target;
+            // Set initial volume
+            player.setVolume(100);
+            console.log('Player ready, setting initial volume:', player.getVolume());
+            onPlayerReady(event);
+          }
         }}
         onEnd={onVideoEnd}
         className="w-full h-full"
