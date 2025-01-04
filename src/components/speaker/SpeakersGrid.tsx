@@ -39,11 +39,11 @@ export const SpeakersGrid = () => {
       videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641231836048?e=1741219200&v=beta&t=5jEMd4hge0tEfcT2dR91TbUt3QKQ2pdM9WoHQWQL8jg"
     },
     {
-      name: "רונן ארנרייך",
-      title: "CX Specialist",
-      topic: "copilot sales & marketing",
+      name: "אלכס יורפולסקי",
+      title: "Technical CRM Specialist, BizApps",
+      topic: "copilot service",
       company: "Microsoft",
-      videoUrl: "o1jWS8LeCIA"
+      videoUrl: "https://media.licdn.com/dms/image/v2/C4E03AQHcEYPiVBzqEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1636529606346?e=1741219200&v=beta&t=IYJceSXb-zg8hO1gPD34vwS78xluep_-pQIKmYOd0YY"
     }
   ];
 
