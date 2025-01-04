@@ -38,7 +38,6 @@ export const VideoPlayer = ({
             showinfo: 0,
             rel: 0,
             loop: 1,
-            playlist: videoUrl, // Required for looping to work
             playsinline: 1,
             iv_load_policy: 3,
             modestbranding: 1
