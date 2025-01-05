@@ -1,12 +1,8 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from '@/lib/supabaseClient';
 
 const RegistrationForm = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,50 +12,10 @@ const RegistrationForm = () => {
     vehicleNumber: ''
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      const { error } = await supabase
-        .from('registrations')
-        .insert([
-          {
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            company: formData.company,
-            title: formData.title,
-            vehicle_number: formData.vehicleNumber
-          }
-        ]);
-
-      if (error) throw error;
-
-      toast({
-        title: "ההרשמה הושלמה בהצלחה!",
-        description: "פרטיך נשמרו במערכת",
-      });
-
-      // Clear form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        title: '',
-        vehicleNumber: ''
-      });
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "שגיאה בהרשמה",
-        description: "אנא נסה שנית מאוחר יותר",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    console.log('Form submitted:', formData);
+    // Supabase integration will be added later
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,6 +83,7 @@ const RegistrationForm = () => {
               name="company"
               value={formData.company}
               onChange={handleChange}
+              required
               className="w-full bg-white/5"
               dir="rtl"
             />
@@ -138,6 +95,7 @@ const RegistrationForm = () => {
               name="title"
               value={formData.title}
               onChange={handleChange}
+              required
               className="w-full bg-white/5"
               dir="rtl"
             />
@@ -161,9 +119,8 @@ const RegistrationForm = () => {
         <Button
           type="submit"
           className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6] text-white py-3 rounded-lg"
-          disabled={isSubmitting}
         >
-          {isSubmitting ? 'מתבצעת הרשמה...' : 'הרשמה לאירוע'}
+          הרשמה לאירוע
         </Button>
       </form>
     </div>
