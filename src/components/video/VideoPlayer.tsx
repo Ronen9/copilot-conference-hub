@@ -78,7 +78,8 @@ export const VideoPlayer = ({
               annotations: 0,
               cc_load_policy: 0,
               color: 'white',
-              autohide: 1
+              autohide: 1,
+              widget_referrer: window.location.origin
             },
           }}
           onReady={(event) => {
