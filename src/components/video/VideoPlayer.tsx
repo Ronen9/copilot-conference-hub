@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
-import { Slider } from "@/components/ui/slider";
+import { VideoProgress } from './VideoProgress';
+import { extractVideoId } from '@/utils/videoUtils';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -22,13 +23,6 @@ export const VideoPlayer = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [localPlayer, setLocalPlayer] = useState<any>(null);
 
-  // Function to extract video ID from YouTube URL
-  const extractVideoId = (url: string) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
-    return (match && match[2].length === 11) ? match[2] : url;
-  };
-
   useEffect(() => {
     if (localPlayer) {
       const interval = setInterval(() => {
@@ -43,12 +37,6 @@ export const VideoPlayer = ({
     }
   }, [localPlayer]);
 
-  const formatTime = (seconds: number) => {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
-  };
-
   const handleSliderChange = (value: number[]) => {
     if (localPlayer && duration) {
       const newTime = (value[0] / 100) * duration;
@@ -58,7 +46,7 @@ export const VideoPlayer = ({
   };
 
   const videoId = extractVideoId(videoUrl);
-  console.log('Video ID extracted:', videoId); // Debug log
+  console.log('Video ID extracted:', videoId);
 
   return (
     <div className="relative w-full pt-[56.25%]">
@@ -109,18 +97,12 @@ export const VideoPlayer = ({
           className="absolute inset-0 w-full h-full"
         />
       </div>
-      <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-black/50 flex items-center gap-4">
-        <span className="text-white text-sm min-w-[80px]">
-          {formatTime(duration - currentTime)}
-        </span>
-        <Slider
-          value={[progress]}
-          onValueChange={handleSliderChange}
-          max={100}
-          step={0.1}
-          className="flex-1"
-        />
-      </div>
+      <VideoProgress
+        duration={duration}
+        currentTime={currentTime}
+        progress={progress}
+        onProgressChange={handleSliderChange}
+      />
     </div>
   );
 };
