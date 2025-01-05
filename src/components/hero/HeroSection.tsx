@@ -52,7 +52,9 @@ export const HeroSection = () => {
               loop: 1,
               playlist: 'SaCVSUbYpVc',
               endscreen: 0,
-              modestbranding: 1
+              modestbranding: 1,
+              iv_load_policy: 3,
+              fs: 0
             },
           }}
           onReady={handleReady}
