@@ -39,7 +39,7 @@ export const SpeakersGrid = () => {
       videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641231836048?e=1741219200&v=beta&t=5jEMd4hge0tEfcT2dR91TbUt3QKQ2pdM9WoHQWQL8jg"
     },
     {
-      name: "אריק בינדי",
+      name: "אריק בידני",
       title: "Sr. Technology Specialist, Digital-Native",
       topic: "github copilot",
       company: "Microsoft",
