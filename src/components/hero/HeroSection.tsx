@@ -54,7 +54,15 @@ export const HeroSection = () => {
               endscreen: 0,
               modestbranding: 1,
               iv_load_policy: 3,
-              fs: 0
+              fs: 0,
+              related: 0,
+              annotations: 0,
+              cc_load_policy: 0,
+              color: 'white',
+              autohide: 1,
+              widget_referrer: window.location.origin,
+              showsearch: 0,
+              ecver: 2
             },
           }}
           onReady={handleReady}
