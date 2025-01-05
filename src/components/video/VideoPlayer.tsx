@@ -22,6 +22,13 @@ export const VideoPlayer = ({
   const [currentTime, setCurrentTime] = useState(0);
   const [localPlayer, setLocalPlayer] = useState<any>(null);
 
+  // Function to extract video ID from YouTube URL
+  const extractVideoId = (url: string) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : url;
+  };
+
   useEffect(() => {
     if (localPlayer) {
       const interval = setInterval(() => {
@@ -50,11 +57,14 @@ export const VideoPlayer = ({
     }
   };
 
+  const videoId = extractVideoId(videoUrl);
+  console.log('Video ID extracted:', videoId); // Debug log
+
   return (
     <div className="relative w-full pt-[56.25%]">
       <div className="absolute inset-0">
         <YouTube
-          videoId={videoUrl}
+          videoId={videoId}
           opts={{
             height: '100%',
             width: '100%',
@@ -75,7 +85,7 @@ export const VideoPlayer = ({
               loop: 0,
               showsearch: 0,
               ecver: 2,
-              playlist: videoUrl,
+              playlist: videoId,
               related: 0,
               annotations: 0
             },
