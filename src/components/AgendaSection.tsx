@@ -6,7 +6,7 @@ const AgendaSection = () => {
     { time: "17:00", title: "התכנסות עם קפה ומאפה" },
     { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
     { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
-    { time: "18:30", title: "Copilot studio", speaker: "Adi Leibivich" },
+    { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
     { time: "18:50", title: "Dinner" },
     { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
     { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
