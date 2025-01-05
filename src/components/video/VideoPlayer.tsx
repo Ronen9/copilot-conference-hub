@@ -48,6 +48,9 @@ export const VideoPlayer = ({
   const videoId = extractVideoId(videoUrl);
   console.log('Video ID extracted:', videoId);
 
+  // Check if this is the second speaker's video (L38GrkE3H3A)
+  const isSecondSpeaker = videoId === 'L38GrkE3H3A';
+
   return (
     <div className="relative w-full pt-[56.25%]">
       <div className="absolute inset-0">
@@ -86,8 +89,10 @@ export const VideoPlayer = ({
             const player = event.target;
             setLocalPlayer(player);
             setDuration(player.getDuration());
-            player.setVolume(100);
-            console.log('Player ready, setting initial volume:', player.getVolume());
+            // Set higher volume (100) for second speaker, default (70) for others
+            const volume = isSecondSpeaker ? 100 : 70;
+            player.setVolume(volume);
+            console.log(`Player ready, setting volume to ${volume} for video ID: ${videoId}`);
             onPlayerReady(player);
           }}
           onEnd={(event) => {
@@ -98,8 +103,8 @@ export const VideoPlayer = ({
             setProgress(0);
             onVideoEnd();
           }}
-          className="absolute inset-0 w-full h-full !rounded-lg"
-          iframeClassName="!rounded-lg"
+          className="absolute inset-0 w-full h-full !rounded-lg pointer-events-none"
+          iframeClassName="!rounded-lg pointer-events-none"
         />
       </div>
       <VideoProgress
