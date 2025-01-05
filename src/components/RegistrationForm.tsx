@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 const RegistrationForm = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -12,10 +16,61 @@ const RegistrationForm = () => {
     vehicleNumber: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    // Supabase integration will be added later
+    setIsSubmitting(true);
+    
+    try {
+      console.log('Submitting registration:', formData);
+      
+      const { error } = await supabase
+        .from('registrations')
+        .insert([
+          {
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+            title: formData.title,
+            vehicle_number: formData.vehicleNumber
+          }
+        ]);
+
+      if (error) {
+        console.error('Error submitting registration:', error);
+        toast({
+          variant: "destructive",
+          title: "שגיאה בהרשמה",
+          description: "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
+        });
+        return;
+      }
+
+      console.log('Registration submitted successfully');
+      toast({
+        title: "ההרשמה הושלמה בהצלחה",
+        description: "פרטי ההרשמה שלך נשמרו במערכת",
+      });
+
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        title: '',
+        vehicleNumber: ''
+      });
+    } catch (error) {
+      console.error('Error in form submission:', error);
+      toast({
+        variant: "destructive",
+        title: "שגיאה בהרשמה",
+        description: "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +138,6 @@ const RegistrationForm = () => {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              required
               className="w-full bg-white/5"
               dir="rtl"
             />
@@ -95,7 +149,6 @@ const RegistrationForm = () => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              required
               className="w-full bg-white/5"
               dir="rtl"
             />
@@ -119,8 +172,9 @@ const RegistrationForm = () => {
         <Button
           type="submit"
           className="w-full bg-[#9b87f5] hover:bg-[#8B5CF6] text-white py-3 rounded-lg"
+          disabled={isSubmitting}
         >
-          הרשמה לאירוע
+          {isSubmitting ? "מתבצעת הרשמה..." : "הרשמה לאירוע"}
         </Button>
       </form>
     </div>
