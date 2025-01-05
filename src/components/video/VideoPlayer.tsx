@@ -97,7 +97,8 @@ export const VideoPlayer = ({
             setProgress(0);
             onVideoEnd();
           }}
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full !rounded-lg"
+          iframeClassName="!rounded-lg"
         />
       </div>
       <VideoProgress
