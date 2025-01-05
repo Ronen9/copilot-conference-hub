@@ -15,7 +15,7 @@ export const VideoProgress = ({
   onProgressChange
 }: VideoProgressProps) => {
   return (
-    <div className="absolute bottom-0 left-0 right-0 px-4 py-2 bg-black/50 flex items-center gap-4">
+    <div className="absolute -bottom-2 left-0 right-0 px-4 py-2 bg-black/50 flex items-center gap-4">
       <span className="text-white text-sm min-w-[80px]">
         {formatTime(duration - currentTime)}
       </span>
