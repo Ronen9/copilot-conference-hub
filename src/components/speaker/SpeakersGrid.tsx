@@ -47,7 +47,7 @@ export const SpeakersGrid = () => {
     },
     {
       name: "יובל אבידני",
-      title: "Senior Data & ML Scientist | AI Community Founder",
+      title: "Senior Data & ML Scientist",
       topic: "AI most popular productivity tools",
       company: "Lusha",
       videoUrl: "https://media.licdn.com/dms/image/v2/D4D03AQH0y1xC0sUsMQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730013126859?e=1741219200&v=beta&t=shvlsXG3vphofnRrv836kjJeKvcnYiYst2A31u_rtHI"
