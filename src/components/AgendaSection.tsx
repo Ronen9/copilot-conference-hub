@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 const AgendaSection = () => {
   const agenda = [
     { time: "17:00", title: "התכנסות עם קפה ומאפה" },
-    { time: "17:30", title: "Copilot 365", speaker: "Ori Husit" },
+    { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
     { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
     { time: "18:30", title: "Copilot studio", speaker: "Adi Leibivich" },
     { time: "18:50", title: "Dinner" },
