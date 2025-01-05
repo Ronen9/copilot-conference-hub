@@ -53,15 +53,7 @@ export const HeroSection = () => {
               playlist: 'SaCVSUbYpVc',
               endscreen: 0,
               modestbranding: 1,
-              annotations: 0,
-              iv_load_policy: 3,
-              showsearch: 0,
-              ecver: 2,
-              related: 0,
-              cc_load_policy: 0,
-              color: 'white',
-              autohide: 1,
-              widget_referrer: window.location.origin
+              annotations: 0
             },
           }}
           onReady={handleReady}
