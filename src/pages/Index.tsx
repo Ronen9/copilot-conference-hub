@@ -23,6 +23,13 @@ const Index = () => {
         </div>
       </div>
 
+      {/* Speakers Title */}
+      <div className="container mx-auto px-4 text-center mb-8">
+        <h2 className="text-3xl md:text-4xl font-bold text-[#9b87f5]">
+          מה בתוכנית? קבלו כמה מילים מהמרצים:
+        </h2>
+      </div>
+
       <SpeakersGrid />
       <AgendaSection />
 
