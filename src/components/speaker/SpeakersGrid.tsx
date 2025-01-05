@@ -18,7 +18,7 @@ export const SpeakersGrid = () => {
       videoUrl: "https://www.youtube.com/watch?v=L38GrkE3H3A"
     },
     {
-      name: "Ronen",
+      name: "רונן ארנרייך",
       title: "Technical CX Specialist, BizApps",
       topic: "copilot sales & marketing",
       company: "Microsoft",
