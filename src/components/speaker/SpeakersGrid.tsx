@@ -15,14 +15,14 @@ export const SpeakersGrid = () => {
       title: "Modern Work Specialists Manager",
       topic: "copilot 365",
       company: "Microsoft",
-      videoUrl: "L38GrkE3H3A"
+      videoUrl: "https://www.youtube.com/watch?v=L38GrkE3H3A"
     },
     {
       name: "רונן ארנרייך",
       title: "Technical CX Specialist, BizApps",
       topic: "copilot sales & marketing",
       company: "Microsoft",
-      videoUrl: "o1jWS8LeCIA"
+      videoUrl: "https://www.youtube.com/watch?v=o1jWS8LeCIA"
     },
     {
       name: "אלכס יורפולסקי",
