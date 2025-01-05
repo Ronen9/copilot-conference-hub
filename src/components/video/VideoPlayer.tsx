@@ -79,13 +79,7 @@ export const VideoPlayer = ({
               cc_load_policy: 0,
               color: 'white',
               autohide: 1,
-              widget_referrer: window.location.origin,
-              hl: 'en',
-              iframe_api: 1,
-              playerapiid: 'ytplayer',
-              version: 3,
-              watermark: 0,
-              wmode: 'transparent'
+              widget_referrer: window.location.origin
             },
           }}
           onReady={(event) => {
@@ -105,7 +99,7 @@ export const VideoPlayer = ({
             onVideoEnd();
           }}
           className="absolute inset-0 w-full h-full !rounded-lg"
-          iframeClassName="!rounded-lg pointer-events-none"
+          iframeClassName="!rounded-lg"
         />
       </div>
       <VideoProgress
