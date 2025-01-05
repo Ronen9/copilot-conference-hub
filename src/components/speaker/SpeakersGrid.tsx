@@ -29,7 +29,7 @@ export const SpeakersGrid = () => {
       title: "Technical CRM Specialist, BizApps",
       topic: "copilot service",
       company: "Microsoft",
-      videoUrl: "https://media.licdn.com/dms/image/v2/C4E03AQHcEYPiVBzqEA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1636529606346?e=1741219200&v=beta&t=IYJceSXb-zg8hO1gPD34vwS78xluep_-pQIKmYOd0YY"
+      videoUrl: "https://www.youtube.com/watch?v=W3OWwa9Ybtc"
     },
     {
       name: "עדי לייבוביץ",
