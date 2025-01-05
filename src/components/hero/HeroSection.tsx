@@ -52,7 +52,8 @@ export const HeroSection = () => {
               loop: 1,
               playlist: 'SaCVSUbYpVc',
               endscreen: 0,
-              modestbranding: 1
+              modestbranding: 1,
+              annotations: 0
             },
           }}
           onReady={handleReady}
