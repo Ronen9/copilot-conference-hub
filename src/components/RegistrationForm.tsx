@@ -16,7 +16,7 @@ const RegistrationForm = () => {
       company: "Company",
       jobTitle: "Title",
       vehicleNumber: "Vehicle Number",
-      parkingHint: "[For parking arrangements]",
+      parkingHint: "For parking arrangements",
       submit: "Register for Event",
       submitting: "Registering..."
     },
@@ -28,7 +28,7 @@ const RegistrationForm = () => {
       company: "חברה",
       jobTitle: "תפקיד",
       vehicleNumber: "מספר רכב",
-      parkingHint: "[לצורך הסדרי חניה]",
+      parkingHint: "לצורך הסדרי חניה",
       submit: "הרשמה לאירוע",
       submitting: "מתבצעת הרשמה..."
     }
