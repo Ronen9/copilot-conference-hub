@@ -17,14 +17,14 @@ const AgendaSection = () => {
       { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
     ],
     en: [
-      { time: "17:00", title: "Welcome Reception with Coffee & Pastries" },
+      { time: "17:00", title: "Reception with Coffee & Pastries" },
       { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
-      { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
-      { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
+      { time: "17:50", title: "Copilot for Sales and Service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
+      { time: "18:30", title: "Copilot Studio", speaker: "Adi Leibowitz" },
       { time: "18:50", title: "Dinner" },
-      { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
-      { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
-      { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
+      { time: "19:10", title: "Github Copilot", speaker: "Arik Bidny" },
+      { time: "19:30", title: "Build Your Dream with AI", speaker: "Yuval Avidani" },
+      { time: "19:50", title: "Kahoot Trivia with Valuable Prizes!!!" },
     ]
   };
 
@@ -65,7 +65,7 @@ const AgendaSection = () => {
         {agenda[language].map((item, index) => (
           <div 
             key={index} 
-            className="flex items-center gap-4 px-4 py-2 border-b border-white/10"
+            className={`flex items-center gap-4 px-4 py-2 border-b border-white/10 ${language === 'en' ? 'text-left' : ''}`}
           >
             <div className="text-2xl font-bold text-[#9b87f5] min-w-[80px]">{item.time}</div>
             <div className="text-white/20 font-bold">|</div>
