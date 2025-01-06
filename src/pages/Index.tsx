@@ -32,7 +32,7 @@ const Index = () => {
         {/* Speakers Title */}
         <div className="container mx-auto px-4 text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            מה בתוכנית? קבלו כמה מילים מהמרצים
+            מה בתוכנית? Click on our speakers' avatar
           </h2>
         </div>
 
