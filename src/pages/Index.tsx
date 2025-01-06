@@ -24,7 +24,7 @@ const IndexContent = () => {
 
   return (
     <div className="bg-gradient-to-b from-[#1A1F2C] to-[#2D3748] text-white rtl">
-      <div className="relative w-screen overflow-hidden">
+      <div className="relative w-full">
         <HeroSection />
         <div className="absolute top-4 right-4 z-10">
           <LanguageToggle />
