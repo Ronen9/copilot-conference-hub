@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import confetti from 'canvas-confetti';
 
 interface RegistrationFormData {
   name: string;
@@ -19,6 +20,14 @@ const initialFormData: RegistrationFormData = {
   company: '',
   title: '',
   vehicleNumber: ''
+};
+
+const triggerConfetti = () => {
+  confetti({
+    particleCount: 100,
+    spread: 70,
+    origin: { y: 0.6 }
+  });
 };
 
 export const useRegistrationForm = () => {
@@ -67,6 +76,9 @@ export const useRegistrationForm = () => {
       }
 
       console.log('Registration submitted successfully');
+      // Trigger confetti effect on successful registration
+      triggerConfetti();
+      
       toast({
         title: language === 'en' ? "Registration Successful" : "ההרשמה הושלמה בהצלחה",
         description: language === 'en' 
