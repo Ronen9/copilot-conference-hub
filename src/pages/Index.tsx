@@ -18,8 +18,8 @@ const Index = () => {
         <div className="container mx-auto px-4 py-12 text-center">
           <div className="flex items-center justify-center gap-6">
             <h1 className="text-4xl md:text-5xl font-bold mb-8 text-[#9b87f5] flex flex-col items-center gap-4">
-              <span>A New Era of Productivity</span>
-              <span>Copilot - Empowering Your Capabilities</span>
+              <span>דור חדש של פרודוקטיביות</span>
+              <span>קופיילוט - מעצים את היכולות שלך</span>
             </h1>
             <img 
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Microsoft_365_Copilot_Icon.svg/2048px-Microsoft_365_Copilot_Icon.svg.png"
@@ -32,7 +32,7 @@ const Index = () => {
         {/* Speakers Title */}
         <div className="container mx-auto px-4 text-center mb-8">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            What's in the Program? Click on our speakers' avatar
+            מה בתוכנית? קבלו כמה מילים מהמרצים
           </h2>
         </div>
 
