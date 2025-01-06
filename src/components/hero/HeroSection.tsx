@@ -36,8 +36,8 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="relative h-[60vh] overflow-hidden">
-      <div className="absolute inset-0 w-full h-full">
+    <div className="relative h-[60vh] w-full overflow-hidden">
+      <div className="absolute inset-0">
         <YouTube
           videoId="SaCVSUbYpVc"
           opts={{
@@ -66,7 +66,7 @@ export const HeroSection = () => {
             },
           }}
           onReady={handleReady}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute top-1/2 left-1/2 w-[100vw] h-[100vh] -translate-x-1/2 -translate-y-1/2 scale-[1.5] object-cover"
         />
         <div className="absolute bottom-16 right-4 flex gap-2">
           <Button
