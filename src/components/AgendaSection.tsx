@@ -1,17 +1,43 @@
 import { MapPin, PartyPopper } from "lucide-react";
 import confetti from 'canvas-confetti';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AgendaSection = () => {
-  const agenda = [
-    { time: "17:00", title: "התכנסות עם קפה ומאפה" },
-    { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
-    { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
-    { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
-    { time: "18:50", title: "Dinner" },
-    { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
-    { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
-    { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
-  ];
+  const { language } = useLanguage();
+
+  const agenda = {
+    he: [
+      { time: "17:00", title: "התכנסות עם קפה ומאפה" },
+      { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
+      { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
+      { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
+      { time: "18:50", title: "Dinner" },
+      { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
+      { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
+      { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
+    ],
+    en: [
+      { time: "17:00", title: "Welcome Reception with Coffee & Pastries" },
+      { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
+      { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
+      { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
+      { time: "18:50", title: "Dinner" },
+      { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
+      { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
+      { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
+    ]
+  };
+
+  const location = {
+    he: {
+      office: "משרדי מיקרוסופט",
+      address: "אלן טיורינג 3, הרצליה"
+    },
+    en: {
+      office: "Microsoft Offices",
+      address: "3 Alan Turing St., Herzliya"
+    }
+  };
 
   const triggerConfetti = () => {
     confetti({
@@ -27,16 +53,16 @@ const AgendaSection = () => {
       <div className="flex flex-col items-center gap-2">
         <div className="flex items-center gap-2 text-[#9b87f5]">
           <MapPin size={20} />
-          <span>משרדי מיקרוסופט</span>
+          <span>{location[language].office}</span>
         </div>
         <div className="text-3xl font-bold text-center text-[#9b87f5]">
           <span>5.3.25</span>
           <span className="mx-2 text-white/20">|</span>
-          <span>אלן טיורינג 3, הרצליה</span>
+          <span>{location[language].address}</span>
         </div>
       </div>
       <div className="space-y-2">
-        {agenda.map((item, index) => (
+        {agenda[language].map((item, index) => (
           <div 
             key={index} 
             className="flex items-center gap-4 px-4 py-2 border-b border-white/10"
