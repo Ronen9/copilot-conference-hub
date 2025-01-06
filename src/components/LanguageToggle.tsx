@@ -9,7 +9,7 @@ export const LanguageToggle = () => {
       <Toggle
         pressed={language === 'en'}
         onPressedChange={(pressed) => setLanguage(pressed ? 'en' : 'he')}
-        className="data-[state=on]:bg-[#9b87f5] px-6"
+        className="data-[state=on]:bg-[#9b87f5] data-[state=off]:bg-[#9b87f5] px-6"
       >
         {language === 'en' ? 'שנה שפה לעברית' : 'Change to English'}
       </Toggle>
