@@ -9,24 +9,24 @@ const RegistrationForm = () => {
 
   const translations = {
     en: {
-      title: "Event Registration",
+      formTitle: "Event Registration",
       fullName: "Full Name",
       email: "Email",
       phone: "Phone",
       company: "Company",
-      title: "Title",
+      jobTitle: "Title",
       vehicleNumber: "Vehicle Number",
       parkingHint: "For parking arrangements",
       submit: "Register for Event",
       submitting: "Registering..."
     },
     he: {
-      title: "הרשמה לאירוע",
+      formTitle: "הרשמה לאירוע",
       fullName: "שם מלא",
       email: "אימייל",
       phone: "טלפון",
       company: "חברה",
-      title: "תפקיד",
+      jobTitle: "תפקיד",
       vehicleNumber: "מספר רכב",
       parkingHint: "לצורך הסדרי חניה",
       submit: "הרשמה לאירוע",
@@ -38,7 +38,7 @@ const RegistrationForm = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-sm rounded-xl p-8">
-      <h2 className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">{t.title}</h2>
+      <h2 className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">{t.formTitle}</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-4">
           <FormField
@@ -79,7 +79,7 @@ const RegistrationForm = () => {
           />
           
           <FormField
-            label={t.title}
+            label={t.jobTitle}
             name="title"
             value={formData.title}
             onChange={handleChange}
