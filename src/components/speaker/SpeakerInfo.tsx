@@ -1,3 +1,5 @@
+import { useLanguage } from '@/contexts/LanguageContext';
+
 interface SpeakerInfoProps {
   name: string;
   title: string;
@@ -6,8 +8,10 @@ interface SpeakerInfoProps {
 }
 
 export const SpeakerInfo = ({ name, title, company, topic }: SpeakerInfoProps) => {
+  const { language } = useLanguage();
+  
   return (
-    <div className="p-4 text-right">
+    <div className={`p-4 ${language === 'en' ? 'text-left' : 'text-right'}`}>
       <h3 className="text-xl font-bold mb-2">{name}</h3>
       <p className="text-[#9b87f5] mb-1">{title}</p>
       <p className="text-gray-300 mb-1">{company}</p>
