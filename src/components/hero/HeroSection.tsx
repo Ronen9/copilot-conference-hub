@@ -36,8 +36,8 @@ export const HeroSection = () => {
   };
 
   return (
-    <div className="relative h-[60vh] w-full">
-      <div className="absolute inset-0 overflow-hidden">
+    <div className="relative h-[60vh] w-full overflow-hidden">
+      <div className="absolute left-1/2 -translate-x-1/2 w-screen">
         <YouTube
           videoId="SaCVSUbYpVc"
           opts={{
