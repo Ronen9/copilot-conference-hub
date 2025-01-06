@@ -8,6 +8,7 @@ interface FormFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   hint?: string;
+  language?: 'en' | 'he';
 }
 
 export const FormField = ({
@@ -17,14 +18,17 @@ export const FormField = ({
   value,
   onChange,
   required = false,
-  hint
+  hint,
+  language = 'he'
 }: FormFieldProps) => {
+  const isHebrew = language === 'he';
+  
   return (
     <div>
-      <label className="block text-sm font-medium mb-2 text-right">
+      <label className={`block text-sm font-medium mb-2 ${isHebrew ? 'text-right' : 'text-left'}`}>
         {label}
-        {required && <span className="text-[#ea384c] mr-1">*</span>}
-        {hint && <span className="text-sm text-gray-400 mr-2">({hint})</span>}
+        {required && <span className="text-[#ea384c] mx-1">*</span>}
+        {hint && <span className="text-sm text-gray-400 mx-2">({hint})</span>}
       </label>
       <Input
         type={type}
@@ -33,7 +37,7 @@ export const FormField = ({
         onChange={onChange}
         required={required}
         className="w-full bg-white/5"
-        dir="rtl"
+        dir={isHebrew ? "rtl" : "ltr"}
       />
     </div>
   );
