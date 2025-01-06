@@ -1,20 +1,19 @@
-import { MapPin, PartyPopper } from "lucide-react";
-import confetti from 'canvas-confetti';
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Card } from "@/components/ui/card";
 
 const AgendaSection = () => {
   const { language } = useLanguage();
 
   const agenda = {
     he: [
-      { time: "17:00", title: "התכנסות עם קפה ומאפה" },
-      { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
-      { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
-      { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
-      { time: "18:50", title: "Dinner" },
-      { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
-      { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
-      { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
+      { time: "17:00", title: "התכנסות וכיבוד קל" },
+      { time: "17:30", title: "קופיילוט 365", speaker: "אורי חוסיט" },
+      { time: "17:50", title: "קופיילוט למכירות ושירות", speaker: "רונן ארנרייך ואלכס יורפולסקי" },
+      { time: "18:30", title: "קופיילוט סטודיו", speaker: "עדי לייבוביץ" },
+      { time: "18:50", title: "ארוחת ערב" },
+      { time: "19:10", title: "גיטהאב קופיילוט", speaker: "אריק בידני" },
+      { time: "19:30", title: "תבנה את החלום שלך עם בינה מלאכותית", speaker: "יובל אבידני" },
+      { time: "19:50", title: "טריוויה בקהוט עם פרסים שווים!!!" },
     ],
     en: [
       { time: "17:00", title: "Reception with Coffee & Pastries" },
@@ -28,66 +27,46 @@ const AgendaSection = () => {
     ]
   };
 
-  const location = {
+  const titles = {
     he: {
-      office: "משרדי מיקרוסופט",
-      address: "אלן טיורינג 3, הרצליה"
+      sectionTitle: "לו״ז האירוע",
+      time: "שעה",
+      session: "מושב",
+      speaker: "מרצה"
     },
     en: {
-      office: "Microsoft Offices",
-      address: "3 Alan Turing St., Herzliya"
+      sectionTitle: "Event Schedule",
+      time: "Time",
+      session: "Session",
+      speaker: "Speaker"
     }
   };
 
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#9b87f5', '#ffffff', '#F97316']
-    });
-  };
-
   return (
-    <div className="container mx-auto px-4 py-12 bg-black/30 rounded-xl backdrop-blur-sm">
-      <div className="flex flex-col items-center gap-2">
-        <div className="flex items-center gap-2 text-[#9b87f5]">
-          <MapPin size={20} />
-          <span>{location[language].office}</span>
-        </div>
-        <div className="text-3xl font-bold text-center text-[#9b87f5]">
-          <span>5.3.25</span>
-          <span className="mx-2 text-white/20">|</span>
-          <span>{location[language].address}</span>
-        </div>
-      </div>
-      <div className="space-y-2">
-        {agenda[language].map((item, index) => (
-          <div 
-            key={index} 
-            className={`flex items-center gap-4 px-4 py-2 border-b border-white/10 ${language === 'en' ? 'text-left' : ''}`}
-          >
-            <div className="text-2xl font-bold text-[#9b87f5] min-w-[80px]">{item.time}</div>
-            <div className="text-white/20 font-bold">|</div>
-            <div className="flex-grow">
-              <span 
-                className={`text-lg font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}
-                onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
-              >
-                {item.title}
-                {item.time === "19:50" && (
-                  <PartyPopper className="inline-block ml-2 text-[#F97316]" size={20} />
-                )}
-              </span>
-              {item.speaker && (
-                <>
-                  <span className="text-white/20 mx-2 font-bold">|</span>
-                  <span className="text-[#9b87f5]">{item.speaker}</span>
-                </>
-              )}
-            </div>
+    <div className="py-12 bg-black/30">
+      <div className="container mx-auto px-4">
+        <h2 className={`text-3xl font-bold mb-8 text-[#9b87f5] ${language === 'en' ? 'text-left' : 'text-right'}`}>
+          {titles[language].sectionTitle}
+        </h2>
+
+        <Card className="bg-black/50 backdrop-blur-sm border-white/10">
+          <div className={`grid grid-cols-3 gap-4 px-4 py-3 border-b border-white/10 text-sm uppercase tracking-wider text-white/50 ${language === 'en' ? 'text-left' : 'text-right'}`}>
+            <div>{titles[language].time}</div>
+            <div>{titles[language].session}</div>
+            <div>{titles[language].speaker}</div>
           </div>
-        ))}
+
+          {agenda[language].map((item, index) => (
+            <div 
+              key={index} 
+              className={`grid grid-cols-3 gap-4 px-4 py-3 border-b border-white/10 ${language === 'en' ? 'text-left' : 'text-right'}`}
+            >
+              <div className="text-[#9b87f5] font-medium">{item.time}</div>
+              <div className="text-white">{item.title}</div>
+              <div className="text-white/70">{item.speaker}</div>
+            </div>
+          ))}
+        </Card>
       </div>
     </div>
   );
