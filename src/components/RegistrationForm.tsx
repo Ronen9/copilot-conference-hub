@@ -16,7 +16,7 @@ const RegistrationForm = () => {
       company: "Company",
       jobTitle: "Title",
       vehicleNumber: "Vehicle Number",
-      parkingHint: "(For parking arrangements)",
+      parkingHint: "For parking arrangements",
       submit: "Register for Event",
       submitting: "Registering..."
     },
