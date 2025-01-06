@@ -11,7 +11,7 @@ export const LanguageToggle = () => {
         onPressedChange={(pressed) => setLanguage(pressed ? 'en' : 'he')}
         className="data-[state=on]:bg-[#9b87f5] px-6"
       >
-        {language === 'en' ? 'English' : 'עברית'}
+        {language === 'en' ? 'שנה שפה לעברית' : 'Change to English'}
       </Toggle>
     </div>
   );
