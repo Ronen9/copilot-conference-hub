@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface RegistrationFormData {
   name: string;
@@ -22,6 +23,7 @@ const initialFormData: RegistrationFormData = {
 
 export const useRegistrationForm = () => {
   const { toast } = useToast();
+  const { language } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<RegistrationFormData>(initialFormData);
 
@@ -56,16 +58,20 @@ export const useRegistrationForm = () => {
         console.error('Error submitting registration:', error);
         toast({
           variant: "destructive",
-          title: "שגיאה בהרשמה",
-          description: "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
+          title: language === 'en' ? "Registration Error" : "שגיאה בהרשמה",
+          description: language === 'en' 
+            ? "An error occurred during registration. Please try again later."
+            : "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
         });
         return;
       }
 
       console.log('Registration submitted successfully');
       toast({
-        title: "ההרשמה הושלמה בהצלחה",
-        description: "פרטי ההרשמה שלך נשמרו במערכת",
+        title: language === 'en' ? "Registration Successful" : "ההרשמה הושלמה בהצלחה",
+        description: language === 'en' 
+          ? "Your registration details have been saved"
+          : "פרטי ההרשמה שלך נשמרו במערכת",
       });
 
       setFormData(initialFormData);
@@ -73,8 +79,10 @@ export const useRegistrationForm = () => {
       console.error('Error in form submission:', error);
       toast({
         variant: "destructive",
-        title: "שגיאה בהרשמה",
-        description: "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
+        title: language === 'en' ? "Registration Error" : "שגיאה בהרשמה",
+        description: language === 'en' 
+          ? "An error occurred during registration. Please try again later."
+          : "אירעה שגיאה בעת ההרשמה. אנא נסו שוב מאוחר יותר.",
       });
     } finally {
       setIsSubmitting(false);
