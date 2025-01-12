@@ -47,7 +47,7 @@ export const SpeakersGrid = () => {
         title: "Sr. Technology Specialist, Digital-Native",
         topic: "github copilot",
         company: "Microsoft",
-        videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
+        videoUrl: "https://www.youtube.com/watch?v=dMk3UoRRfyk"
       },
       {
         name: "יובל אבידני",
@@ -91,7 +91,7 @@ export const SpeakersGrid = () => {
         title: "Sr. Technology Specialist, Digital-Native",
         topic: "GitHub Copilot",
         company: "Microsoft",
-        videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHWSSnKLAWN0A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1616336989258?e=1741219200&v=beta&t=9sbjkiuazARHcRNNazGu8g7gSdmxme1ktxXDUFIcF00"
+        videoUrl: "https://www.youtube.com/watch?v=dMk3UoRRfyk"
       },
       {
         name: "Yuval Avidani",
