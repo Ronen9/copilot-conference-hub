@@ -64,10 +64,12 @@ const getEmailTemplate = (registration: RegistrationEmail) => {
           <p>תודה על הרשמתך לכנס Copilot! ${companyText}</p>
           
           <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 0;">אנחנו נרגשים לארח אותך באירוע שבו נחקור את עתיד הפרודוקטיביות עם Microsoft Copilot.</p>
+            <p style="margin: 0;">אנחנו נרגשים לארח אותך באירוע שבו נציג את עתיד הפרודקטיביות עם קופיילוט</p>
           </div>
           
-          <p>בקרוב נשלח אליך פרטים נוספים על לוח הזמנים ומיקום האירוע.</p>
+          <p>מקום: ריאקטור - מידטאון תל אביב (דרך מנחם בגין 144, קומה 50, תל אביב)<br>
+          שעה: 17:00<br>
+          אג'נדה: <a href="https://copilot-conference-hub.lovable.app/" style="color: #9b87f5;">https://copilot-conference-hub.lovable.app/</a></p>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
           
