@@ -8,7 +8,7 @@ const AgendaSection = () => {
   const agenda = {
     he: [
       { time: "17:00", title: "התכנסות עם קפה ומאפה" },
-      { time: "17:30", title: "Copilot 365", speaker: "אורי חוסיט" },
+      { time: "17:30", title: "Copilot 365", speaker: "אורי הוסיט" },
       { time: "17:50", title: "Copilot for sales and service", speaker: "רונן ארנרייך ואלכס יורפולסקי" },
       { time: "18:30", title: "Copilot studio", speaker: "עדי לייבוביץ" },
       { time: "18:50", title: "ארוחת ערב" },
