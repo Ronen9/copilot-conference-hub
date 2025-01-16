@@ -43,6 +43,30 @@ export const useRegistrationForm = () => {
     }));
   };
 
+  const sendConfirmationEmail = async (registration: RegistrationFormData) => {
+    try {
+      console.log('Sending confirmation email for:', registration.email);
+      
+      const { error } = await supabase.functions.invoke('send-confirmation', {
+        body: {
+          name: registration.name,
+          email: registration.email,
+          company: registration.company
+        }
+      });
+
+      if (error) {
+        console.error('Error sending confirmation email:', error);
+        // We don't want to show this error to the user since registration was successful
+        return;
+      }
+
+      console.log('Confirmation email sent successfully');
+    } catch (error) {
+      console.error('Error in sendConfirmationEmail:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -76,14 +100,18 @@ export const useRegistrationForm = () => {
       }
 
       console.log('Registration submitted successfully');
+      
+      // Send confirmation email
+      await sendConfirmationEmail(formData);
+      
       // Trigger confetti effect on successful registration
       triggerConfetti();
       
       toast({
         title: language === 'en' ? "Registration Successful" : "ההרשמה הושלמה בהצלחה",
         description: language === 'en' 
-          ? "Your registration details have been saved"
-          : "פרטי ההרשמה שלך נשמרו במערכת",
+          ? "Your registration details have been saved. Check your email for confirmation!"
+          : "פרטי ההרשמה שלך נשמרו במערכת. בדוק את האימייל שלך לקבלת אישור!",
       });
 
       setFormData(initialFormData);
