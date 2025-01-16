@@ -30,12 +30,12 @@ const AgendaSection = () => {
 
   const location = {
     he: {
-      office: "ריאקטור - מידטאון, תל אביב",
-      address: "דרך מנחם בגין 144, קומה 50, תל אביב"
+      office: "משרדי מיקרוסופט",
+      address: "אלן טיורינג 3, הרצליה"
     },
     en: {
-      office: "Reactor - Midtown, Tel Aviv",
-      address: "144 Menachem Begin Rd., 50th floor, Tel Aviv"
+      office: "Microsoft Offices",
+      address: "3 Alan Turing St., Herzliya"
     }
   };
 
