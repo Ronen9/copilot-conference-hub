@@ -14,15 +14,13 @@ interface RegistrationEmail {
 }
 
 const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
-  // Create a date object in Jerusalem timezone
-  const eventDate = new Date(`${date}T${time}+02:00`); // +02:00 is Jerusalem's timezone offset
-  
   if (forOutlook) {
-    // Outlook format: YYYY-MM-DDTHH:mm:ss
-    return eventDate.toISOString().split('.')[0];
+    // For Outlook, we need to keep the time as is and just format it correctly
+    return `${date}T${time}:00`;
   }
   
-  // Google Calendar format: YYYYMMDDTHHmmssZ
+  // For Google Calendar, we keep the existing format
+  const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
 
