@@ -36,14 +36,16 @@ const getEmailTemplate = (registration: RegistrationEmail) => {
             <p>Thank you for registering for our Copilot Conference! ${companyText}</p>
             
             <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; margin: 20px 0;">
-              <p style="margin: 0;">We're excited to have you join us for this event where we'll explore the future of productivity with Microsoft Copilot.</p>
+              <p style="margin: 0;">We're excited to have you join us for this event where we'll explore the future of productivity with Copilot</p>
             </div>
             
-            <p>We'll send you more details about the event schedule and location soon.</p>
+            <p>Location: Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor, Tel Aviv)<br>
+            Time: 17:00<br>
+            Agenda: <a href="https://copilot-conference-hub.lovable.app/" style="color: #9b87f5;">https://copilot-conference-hub.lovable.app/</a></p>
             
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             
-            <p style="margin-bottom: 0;">Best regards,<br>The Conference Team</p>
+            <p style="margin-bottom: 0;">Best regards,<br>Microsoft Team</p>
           </div>
         </div>
       `
@@ -67,13 +69,13 @@ const getEmailTemplate = (registration: RegistrationEmail) => {
             <p style="margin: 0;">אנחנו נרגשים לארח אותך באירוע שבו נציג את עתיד הפרודקטיביות עם קופיילוט</p>
           </div>
           
-          <p>מקום: ריאקטור - מידטאון תל אביב (דרך מנחם בגין 144, קומה 50, תל אביב)<br>
+          <p>מקום: משרדי מיקרוסופט תל-אביב ב Reactor - מידטאון תל אביב (דרך מנחם בגין 144, קומה 50, תל אביב)<br>
           שעה: 17:00<br>
           אג'נדה: <a href="https://copilot-conference-hub.lovable.app/" style="color: #9b87f5;">https://copilot-conference-hub.lovable.app/</a></p>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
           
-          <p style="margin-bottom: 0;">בברכה,<br>צוות הכנס</p>
+          <p style="margin-bottom: 0;">בברכה,<br>צוות מיקרוסופט</p>
         </div>
       </div>
     `
