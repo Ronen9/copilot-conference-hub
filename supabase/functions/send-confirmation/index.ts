@@ -15,12 +15,6 @@ interface RegistrationEmail {
 }
 
 const getEmailTemplate = (registration: RegistrationEmail) => {
-  const companyText = registration.company 
-    ? registration.language === 'en'
-      ? `from ${registration.company}`
-      : `מחברת ${registration.company}`
-    : '';
-
   if (registration.language === 'en') {
     return {
       subject: "Welcome to Copilot Conference!",
@@ -37,7 +31,7 @@ const getEmailTemplate = (registration: RegistrationEmail) => {
             <div style="background-color: #ffffff; padding: 24px;">
               <p style="margin-top: 0;">Dear ${registration.name},</p>
               
-              <p>Thank you for registering for our Copilot Conference! ${companyText}</p>
+              <p>Thank you for registering for our Copilot Conference!</p>
               
               <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; margin: 20px 0;">
                 <p style="margin: 0;">We're excited to have you join us for this event where we'll explore the future of productivity with Copilot</p>
@@ -72,7 +66,7 @@ const getEmailTemplate = (registration: RegistrationEmail) => {
           <div style="background-color: #ffffff; padding: 24px;">
             <p style="margin-top: 0;">שלום ${registration.name},</p>
             
-            <p>תודה על הרשמתך לכנס Copilot! ${companyText}</p>
+            <p>תודה על הרשמתך לכנס Copilot!</p>
             
             <div style="background-color: #f8f9fa; padding: 16px; border-radius: 8px; margin: 20px 0;">
               <p style="margin: 0;">אנחנו נרגשים לארח אותך באירוע שבו נציג את עתיד הפרודקטיביות עם קופיילוט</p>
