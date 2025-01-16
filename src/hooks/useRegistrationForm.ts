@@ -51,13 +51,13 @@ export const useRegistrationForm = () => {
         body: {
           name: registration.name,
           email: registration.email,
-          company: registration.company
+          company: registration.company,
+          language: language // Add language to the payload
         }
       });
 
       if (error) {
         console.error('Error sending confirmation email:', error);
-        // We don't want to show this error to the user since registration was successful
         return;
       }
 
