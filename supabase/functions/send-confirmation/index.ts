@@ -10,7 +10,6 @@ const corsHeaders = {
 interface RegistrationEmail {
   name: string;
   email: string;
-  company?: string;
   language: 'en' | 'he';
 }
 
@@ -41,7 +40,7 @@ const getEnglishTemplate = (name: string) => ({
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
           
-          <p style="margin-bottom: 0;">Best regards,<br>Microsoft Team</p>
+          <p style="margin-bottom: 0;">See you...</p>
         </div>
       </div>
     </div>
@@ -75,7 +74,7 @@ const getHebrewTemplate = (name: string) => ({
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
           
-          <p style="margin-bottom: 0;">בברכה,<br>צוות מיקרוסופט</p>
+          <p style="margin-bottom: 0;">נתראה...</p>
         </div>
       </div>
     </div>
