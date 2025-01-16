@@ -8,12 +8,12 @@ const AgendaSection = () => {
   const agenda = {
     he: [
       { time: "17:00", title: "התכנסות עם קפה ומאפה" },
-      { time: "17:30", title: "Copilot 365", speaker: "Ori Husyt" },
-      { time: "17:50", title: "Copilot for sales and service", speaker: "Ronen Ehrenreich and Alex Yurpolsky" },
-      { time: "18:30", title: "Copilot studio", speaker: "Adi Leibowitz" },
+      { time: "17:30", title: "Copilot 365", speaker: "אורי חוסיט" },
+      { time: "17:50", title: "Copilot for sales and service", speaker: "רונן ארנרייך ואלכס יורפולסקי" },
+      { time: "18:30", title: "Copilot studio", speaker: "עדי לייבוביץ" },
       { time: "18:50", title: "ארוחת ערב" },
-      { time: "19:10", title: "Github copilot", speaker: "Arik Bidny" },
-      { time: "19:30", title: "Build your dream with AI", speaker: "Yuval Avidani" },
+      { time: "19:10", title: "Github copilot", speaker: "אריק בידני" },
+      { time: "19:30", title: "Build your dream with AI", speaker: "יובל אבידני" },
       { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
     ],
     en: [
@@ -71,7 +71,7 @@ const AgendaSection = () => {
             <div className="text-white/20 font-bold">|</div>
             <div className="flex-grow">
               <span 
-                className={`text-lg font-semibold ${item.title === "Dinner" ? "text-[#F97316]" : ""}`}
+                className={`text-lg font-semibold ${item.title === "Dinner" || item.title === "ארוחת ערב" ? "text-[#F97316]" : ""}`}
                 onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
               >
                 {item.title}
