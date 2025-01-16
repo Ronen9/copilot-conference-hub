@@ -14,7 +14,8 @@ interface RegistrationEmail {
 }
 
 const formatDateForCalendar = (date: string, time: string) => {
-  const eventDate = new Date(`${date}T${time}`);
+  // Create a date object in Jerusalem timezone
+  const eventDate = new Date(`${date}T${time}+02:00`); // +02:00 is Jerusalem's timezone offset
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
 
