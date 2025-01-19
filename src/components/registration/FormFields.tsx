@@ -55,15 +55,6 @@ export const FormFields = ({ formData, handleChange, t, language }: FormFieldsPr
         onChange={handleChange}
         language={language}
       />
-      
-      <FormField
-        label={t.vehicleNumber}
-        name="vehicleNumber"
-        value={formData.vehicleNumber}
-        onChange={handleChange}
-        hint={t.parkingHint}
-        language={language}
-      />
     </div>
   );
 };
