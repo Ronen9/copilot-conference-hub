@@ -39,7 +39,7 @@ export const speakers: SpeakersData = {
       title: "Senior Program Manager",
       topic: "copilot studio",
       company: "Microsoft",
-      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641231836048?e=1741219200&v=beta&t=5jEMd4hge0tEfcT2dR91TbUt3QKQ2pdM9WoHQWQL8jg"
+      videoUrl: "https://youtube.com/watch?v=bgFSKOLK4MU"
     },
     {
       name: "אריק בידני",
@@ -83,7 +83,7 @@ export const speakers: SpeakersData = {
       title: "Senior Program Manager",
       topic: "Copilot Studio",
       company: "Microsoft",
-      videoUrl: "https://media.licdn.com/dms/image/v2/C4D03AQHX0N-6qQ-5hg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1641231836048?e=1741219200&v=beta&t=5jEMd4hge0tEfcT2dR91TbUt3QKQ2pdM9WoHQWQL8jg"
+      videoUrl: "https://youtube.com/watch?v=bgFSKOLK4MU"
     },
     {
       name: "Arik Bidny",
