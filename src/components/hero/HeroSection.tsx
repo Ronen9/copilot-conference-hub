@@ -39,7 +39,7 @@ export const HeroSection = () => {
     <div className="relative h-[60vh] w-full">
       <div className="absolute inset-0 overflow-hidden">
         <YouTube
-          videoId="SaCVSUbYpVc"
+          videoId="l4B1UflAty8"
           opts={{
             height: '100%',
             width: '100%',
@@ -50,7 +50,7 @@ export const HeroSection = () => {
               showinfo: 0,
               rel: 0,
               loop: 1,
-              playlist: 'SaCVSUbYpVc',
+              playlist: 'l4B1UflAty8',
               endscreen: 0,
               modestbranding: 1,
               iv_load_policy: 3,
