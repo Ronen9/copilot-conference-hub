@@ -11,7 +11,7 @@ const AgendaSection = () => {
       { time: "17:30", title: "Copilot 365", speaker: "אורי הוסיט" },
       { time: "17:50", title: "Copilot for sales and service", speaker: "רונן ארנרייך ואלכס יורפולסקי" },
       { time: "18:30", title: "Copilot studio", speaker: "עדי לייבוביץ" },
-      { time: "18:50", title: "ארוחת ערב" },
+      { time: "18:50", title: "בופה חלבי" },
       { time: "19:10", title: "Github copilot", speaker: "אריק בידני" },
       { time: "19:30", title: "Build your dream with AI", speaker: "יובל אבידני" },
       { time: "19:50", title: "Wearable gifts" },
