@@ -46,6 +46,7 @@ export const VideoPlayer = ({
   };
 
   const videoId = extractVideoId(videoUrl);
+  console.log('Video URL:', videoUrl);
   console.log('Video ID extracted:', videoId);
 
   return (
@@ -89,6 +90,9 @@ export const VideoPlayer = ({
             player.setVolume(100);
             console.log('Player ready, setting initial volume:', player.getVolume());
             onPlayerReady(player);
+          }}
+          onError={(error) => {
+            console.error('YouTube Player Error:', error);
           }}
           onEnd={(event) => {
             console.log('Video ended, rewinding and pausing');

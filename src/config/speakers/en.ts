@@ -27,7 +27,7 @@ export const englishSpeakers: Speaker[] = [
     title: "Senior Program Manager",
     topic: "Copilot Studio",
     company: "Microsoft",
-    videoUrl: "https://youtube.com/watch?v=bgFSKOLK4MU"
+    videoUrl: "https://www.youtube.com/watch?v=bgFSKOLK4MU"
   },
   {
     name: "Arik Bidny",
