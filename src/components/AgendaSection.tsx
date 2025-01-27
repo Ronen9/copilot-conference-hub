@@ -14,7 +14,7 @@ const AgendaSection = () => {
       { time: "18:50", title: "בופה חלבי" },
       { time: "19:10", title: "Github copilot", speaker: "אריק בידני" },
       { time: "19:30", title: "Build your dream with AI", speaker: "יובל אבידני" },
-      { time: "19:50", title: "Wearable gifts" },
+      { time: "19:50", title: "סיום האירוע עם מתנות פרידה" },
     ],
     en: [
       { time: "17:00", title: "Reception with Coffee & Pastries" },
@@ -24,7 +24,7 @@ const AgendaSection = () => {
       { time: "18:50", title: "Dinner" },
       { time: "19:10", title: "Github Copilot", speaker: "Arik Bidny" },
       { time: "19:30", title: "Build Your Dream with AI", speaker: "Yuval Avidani" },
-      { time: "19:50", title: "Wearable gifts" },
+      { time: "19:50", title: "End of event with farewell gifts" },
     ]
   };
 
@@ -74,6 +74,9 @@ const AgendaSection = () => {
                 className={`text-lg font-semibold ${(item.title === "Dinner" || item.title === "בופה חלבי") ? "text-[#F97316]" : ""}`}
                 onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
               >
+                {item.time === "19:50" && (
+                  <PartyPopper className="inline-block mr-2 text-[#F97316]" size={20} />
+                )}
                 {item.title}
                 {item.time === "19:50" && (
                   <PartyPopper className="inline-block ml-2 text-[#F97316]" size={20} />
