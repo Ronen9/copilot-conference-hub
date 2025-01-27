@@ -24,7 +24,7 @@ const AgendaSection = () => {
       { time: "18:50", title: "Dinner" },
       { time: "19:10", title: "Github Copilot", speaker: "Arik Bidny" },
       { time: "19:30", title: "Build Your Dream with AI", speaker: "Yuval Avidani" },
-      { time: "19:50", title: "Kahoot Trivia with Valuable Prizes!!!" },
+      { time: "19:50", title: "Wearable gifts" },
     ]
   };
 
@@ -71,7 +71,7 @@ const AgendaSection = () => {
             <div className="text-white/20 font-bold">|</div>
             <div className="flex-grow">
               <span 
-                className={`text-lg font-semibold ${item.title === "Dinner" || item.title === "ארוחת ערב" ? "text-[#F97316]" : ""}`}
+                className={`text-lg font-semibold ${(item.title === "Dinner" || item.title === "בופה חלבי") ? "text-[#F97316]" : ""}`}
                 onMouseEnter={() => item.time === "19:50" && triggerConfetti()}
               >
                 {item.title}
