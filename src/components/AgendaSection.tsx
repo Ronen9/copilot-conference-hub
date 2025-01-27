@@ -14,7 +14,7 @@ const AgendaSection = () => {
       { time: "18:50", title: "ארוחת ערב" },
       { time: "19:10", title: "Github copilot", speaker: "אריק בידני" },
       { time: "19:30", title: "Build your dream with AI", speaker: "יובל אבידני" },
-      { time: "19:50", title: "Kahoot trivia with valuable prices!!!" },
+      { time: "19:50", title: "Wearable gifts" },
     ],
     en: [
       { time: "17:00", title: "Reception with Coffee & Pastries" },
