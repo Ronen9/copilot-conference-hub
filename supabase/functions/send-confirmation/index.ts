@@ -34,10 +34,10 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("Missing required environment variables");
     }
 
-    // Initialize EmailJS with both public and private keys for server-side usage
+    // Initialize EmailJS with both public and private keys
     init({
-      publicKey: publicKey,
-      privateKey: privateKey
+      publicKey,
+      privateKey,
     });
 
     const templateParams = {
@@ -55,17 +55,12 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await send(
       serviceId,
       templateId,
-      templateParams,
-      {
-        publicKey: publicKey,
-        privateKey: privateKey
-      }
+      templateParams
     );
 
     console.log("Email sent successfully:", emailResponse);
 
     return new Response(JSON.stringify({ success: true }), {
-      status: 200,
       headers: {
         "Content-Type": "application/json",
         ...corsHeaders,
@@ -76,7 +71,7 @@ const handler = async (req: Request): Promise<Response> => {
     
     return new Response(
       JSON.stringify({ 
-        error: error.message || "An error occurred while sending the confirmation email",
+        error: "An error occurred while sending the confirmation email",
         details: error
       }),
       {
