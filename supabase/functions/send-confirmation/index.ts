@@ -34,11 +34,8 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error("Missing required environment variables");
     }
 
-    // Initialize EmailJS with both public and private keys
-    init({
-      publicKey,
-      privateKey,
-    });
+    // Initialize EmailJS with private key for server-side usage
+    init(privateKey);
 
     const templateParams = {
       to_name: name,
@@ -55,7 +52,11 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await send(
       serviceId,
       templateId,
-      templateParams
+      templateParams,
+      {
+        publicKey,
+        privateKey,
+      }
     );
 
     console.log("Email sent successfully:", emailResponse);
