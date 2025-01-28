@@ -1,7 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+import emailjs from '@emailjs/browser';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -166,7 +164,6 @@ const getHebrewTemplate = (name: string) => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -181,12 +178,23 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending email to:", registration.email);
 
-    const emailResponse = await resend.emails.send({
-      from: "Microsoft Copilot Conference <onboarding@resend.dev>",
-      to: registration.email,
-      subject: template.subject,
-      html: template.html,
+    // Initialize EmailJS with your credentials
+    emailjs.init({
+      publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY"),
+      privateKey: Deno.env.get("EMAILJS_PRIVATE_KEY")
     });
+
+    const emailResponse = await emailjs.send(
+      Deno.env.get("EMAILJS_SERVICE_ID"),
+      Deno.env.get("EMAILJS_TEMPLATE_ID"),
+      {
+        to_email: registration.email,
+        to_name: registration.name,
+        subject: template.subject,
+        message: template.html,
+        language: registration.language
+      }
+    );
 
     console.log("Email sent successfully:", emailResponse);
 
