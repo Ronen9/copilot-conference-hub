@@ -152,12 +152,13 @@ const handler = async (req: Request): Promise<Response> => {
       user_id: EMAILJS_PUBLIC_KEY,
       template_params: {
         to_email: registration.email,
-        reply_to: registration.email,
-        from_name: "Copilot Conference",
         to_name: registration.name,
         subject: template.subject,
-        html_content: template.content,
+        message_html: template.content,
         message: template.content,
+        email_to: registration.email, // Add this explicit field
+        recipient: registration.email, // Add another variation
+        destination_email: registration.email, // And another
       },
     };
 
@@ -170,7 +171,6 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
         "Origin": "https://copilot-conference-hub.lovable.app",
         "Referer": "https://copilot-conference-hub.lovable.app/",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
       },
       body: JSON.stringify(emailjsPayload),
     });
