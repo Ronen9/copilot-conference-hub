@@ -23,8 +23,18 @@ const handler = async (req: Request): Promise<Response> => {
     const { name, email, company, language }: EmailRequest = await req.json();
     console.log("Received request:", { name, email, company, language });
 
+    // Validate required environment variables
+    const publicKey = Deno.env.get("EMAILJS_PUBLIC_KEY");
+    const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
+    const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
+
+    if (!publicKey || !serviceId || !templateId) {
+      console.error("Missing required environment variables");
+      throw new Error("Missing required environment variables");
+    }
+
     // Initialize EmailJS with the public key
-    init(Deno.env.get("EMAILJS_PUBLIC_KEY") || '');
+    init(publicKey);
 
     const templateParams = {
       to_name: name,
@@ -39,11 +49,11 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Sending email with params:", templateParams);
 
     const emailResponse = await send(
-      Deno.env.get("EMAILJS_SERVICE_ID") || '',
-      Deno.env.get("EMAILJS_TEMPLATE_ID") || '',
+      serviceId,
+      templateId,
       templateParams,
       {
-        publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY") || '',
+        publicKey: publicKey,
       }
     );
 
@@ -58,11 +68,18 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error) {
     console.error("Error in send-confirmation function:", error);
+    
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message || "An error occurred while sending the confirmation email",
+        details: error
+      }),
       {
         status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+        headers: {
+          "Content-Type": "application/json",
+          ...corsHeaders,
+        },
       }
     );
   }
