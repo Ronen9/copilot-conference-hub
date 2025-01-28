@@ -1,6 +1,8 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const EMAILJS_PUBLIC_KEY = "nwBHzISaQ4b1Qomp-";
+const EMAILJS_SERVICE_ID = "service_tvmk8uo";
+const EMAILJS_TEMPLATE_ID = "template_h6rpozq";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -15,11 +17,9 @@ interface RegistrationEmail {
 
 const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
   if (forOutlook) {
-    // For Outlook, we need to keep the time as is and just format it correctly
     return `${date}T${time}:00`;
   }
   
-  // For Google Calendar, we keep the existing format
   const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
@@ -35,7 +35,6 @@ const getCalendarLinks = () => {
   const description = "Join us for an exciting Copilot Conference! More details at: https://copilot-conference-hub.lovable.app/";
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-  
   const outlookLink = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&body=${encodeURIComponent(description)}&startdt=${outlookStartTime}&enddt=${outlookEndTime}&location=${encodeURIComponent(location)}`;
 
   return { googleLink, outlookLink };
@@ -148,32 +147,42 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailTemplate = getEmailTemplate(registration);
 
-    const res = await fetch("https://api.resend.com/emails", {
+    // EmailJS API endpoint
+    const emailjsEndpoint = "https://api.emailjs.com/api/v1.0/email/send";
+    
+    const emailjsPayload = {
+      service_id: EMAILJS_SERVICE_ID,
+      template_id: EMAILJS_TEMPLATE_ID,
+      user_id: EMAILJS_PUBLIC_KEY,
+      template_params: {
+        to_email: registration.email,
+        to_name: registration.name,
+        subject: emailTemplate.subject,
+        html_content: emailTemplate.html,
+      },
+    };
+
+    console.log("Sending email via EmailJS...");
+    
+    const res = await fetch(emailjsEndpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
       },
-      body: JSON.stringify({
-        from: "Copilot Conference <onboarding@resend.dev>",
-        to: [registration.email],
-        subject: emailTemplate.subject,
-        html: emailTemplate.html,
-      }),
+      body: JSON.stringify(emailjsPayload),
     });
 
-    console.log("Resend API response status:", res.status);
+    console.log("EmailJS API response status:", res.status);
 
     if (res.ok) {
-      const data = await res.json();
-      console.log("Email sent successfully:", data);
-      return new Response(JSON.stringify(data), {
+      console.log("Email sent successfully via EmailJS");
+      return new Response(JSON.stringify({ success: true }), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     } else {
       const error = await res.text();
-      console.error("Resend API error:", error);
+      console.error("EmailJS API error:", error);
       return new Response(JSON.stringify({ error }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
