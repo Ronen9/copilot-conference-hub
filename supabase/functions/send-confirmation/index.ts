@@ -164,6 +164,7 @@ const getHebrewTemplate = (name: string) => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -184,11 +185,13 @@ const handler = async (req: Request): Promise<Response> => {
         port: 465,
         tls: true,
         auth: {
-          username: Deno.env.get("GMAIL_USER"),
-          password: Deno.env.get("GMAIL_APP_PASSWORD"),
+          username: Deno.env.get("GMAIL_USER") || "",
+          password: Deno.env.get("GMAIL_APP_PASSWORD") || "",
         },
       },
     });
+
+    console.log("SMTP client configured, attempting to send email...");
 
     await client.send({
       from: `Microsoft Copilot Conference <${Deno.env.get("GMAIL_USER")}>`,
@@ -211,7 +214,7 @@ Visit https://copilot-conference-hub.lovable.app/ for more information.`,
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error in send-confirmation function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
