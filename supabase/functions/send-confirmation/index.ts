@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { init } from 'npm:@emailjs/browser';
-import { send } from 'npm:@emailjs/browser';
+import { EmailJSResponseStatus } from "npm:@emailjs/nodejs";
+import { init, send } from "npm:@emailjs/nodejs";
 import { corsHeaders } from './utils.ts';
 import { getEnglishTemplate } from './templates/english.ts';
 import { getHebrewTemplate } from './templates/hebrew.ts';
