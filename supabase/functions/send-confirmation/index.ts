@@ -12,6 +12,7 @@ const corsHeaders = {
 interface RegistrationEmail {
   name: string;
   email: string;
+  company: string;
   language: 'en' | 'he';
 }
 
@@ -42,9 +43,7 @@ const getCalendarLinks = () => {
 
 const getEnglishTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
-  return {
-    subject: "Welcome to Copilot Conference!",
-    html: `
+  return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -80,15 +79,12 @@ const getEnglishTemplate = (name: string) => {
         </div>
       </div>
     </div>
-  `
-  };
+  `;
 };
 
 const getHebrewTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
-  return {
-    subject: "ברוכים הבאים לכנס Copilot!",
-    html: `
+  return `
     <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -124,14 +120,7 @@ const getHebrewTemplate = (name: string) => {
         </div>
       </div>
     </div>
-  `
-  };
-};
-
-const getEmailTemplate = (registration: RegistrationEmail) => {
-  return registration.language === 'en' 
-    ? getEnglishTemplate(registration.name)
-    : getHebrewTemplate(registration.name);
+  `;
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -145,7 +134,9 @@ const handler = async (req: Request): Promise<Response> => {
     const registration: RegistrationEmail = await req.json();
     console.log("Received registration:", registration);
 
-    const emailTemplate = getEmailTemplate(registration);
+    const emailTemplate = registration.language === 'en' 
+      ? getEnglishTemplate(registration.name)
+      : getHebrewTemplate(registration.name);
 
     // EmailJS API endpoint
     const emailjsEndpoint = "https://api.emailjs.com/api/v1.0/email/send";
@@ -156,13 +147,11 @@ const handler = async (req: Request): Promise<Response> => {
       user_id: EMAILJS_PUBLIC_KEY,
       template_params: {
         to_email: registration.email,
-        to_name: registration.name,
-        subject: emailTemplate.subject,
-        html_content: emailTemplate.html,
+        message_html: emailTemplate,
       },
     };
 
-    console.log("Sending email via EmailJS...");
+    console.log("Sending email via EmailJS to:", registration.email);
     
     const res = await fetch(emailjsEndpoint, {
       method: "POST",
@@ -175,18 +164,18 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify(emailjsPayload),
     });
 
-    console.log("EmailJS API response status:", res.status);
+    const responseData = await res.text();
+    console.log("EmailJS API response:", responseData);
 
     if (res.ok) {
-      console.log("Email sent successfully via EmailJS");
+      console.log("Email sent successfully to:", registration.email);
       return new Response(JSON.stringify({ success: true }), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     } else {
-      const error = await res.text();
-      console.error("EmailJS API error:", error);
-      return new Response(JSON.stringify({ error }), {
+      console.error("EmailJS API error:", responseData);
+      return new Response(JSON.stringify({ error: responseData }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
