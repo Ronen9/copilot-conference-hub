@@ -1,5 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { SMTPClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts";
+import { Resend } from "npm:resend@2.0.0";
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -178,38 +180,15 @@ const handler = async (req: Request): Promise<Response> => {
       : getHebrewTemplate(registration.name);
 
     console.log("Sending email to:", registration.email);
-    
-    const client = new SMTPClient({
-      connection: {
-        hostname: "smtp.gmail.com",
-        port: 465,
-        tls: true,
-        auth: {
-          username: Deno.env.get("GMAIL_USER") || "",
-          password: Deno.env.get("GMAIL_APP_PASSWORD") || "",
-        },
-      },
-    });
 
-    console.log("SMTP client configured, attempting to send email...");
-
-    await client.send({
-      from: `Microsoft Copilot Conference <${Deno.env.get("GMAIL_USER")}>`,
+    const emailResponse = await resend.emails.send({
+      from: "Microsoft Copilot Conference <onboarding@resend.dev>",
       to: registration.email,
       subject: template.subject,
       html: template.html,
-      content: `Thank you for registering for the Microsoft Copilot Conference!
-
-Event Details:
-Location: Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor)
-Date: March 5th, 2025
-Time: 17:00 - 20:00
-
-Visit https://copilot-conference-hub.lovable.app/ for more information.`,
     });
 
-    await client.close();
-    console.log("Email sent successfully");
+    console.log("Email sent successfully:", emailResponse);
 
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
