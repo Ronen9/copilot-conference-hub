@@ -27,10 +27,9 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Sending email to:", registration.email);
 
-    // Initialize EmailJS with credentials
+    // Initialize EmailJS with only the public key
     emailjs.init({
       publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY"),
-      privateKey: Deno.env.get("EMAILJS_PRIVATE_KEY")
     });
 
     const emailResponse = await emailjs.send(
