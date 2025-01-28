@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { EmailJSResponseStatus } from "npm:@emailjs/nodejs";
 import { init, send } from "npm:@emailjs/nodejs";
 import { corsHeaders } from './utils.ts';
 import { getEnglishTemplate } from './templates/english.ts';
@@ -22,16 +21,16 @@ const handler = async (req: Request): Promise<Response> => {
     const registration: RegistrationEmail = await req.json();
     console.log("Received registration:", registration);
 
+    // Initialize EmailJS with the public key
+    init({
+      publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY") || '',
+    });
+
     const template = registration.language === 'en' 
       ? getEnglishTemplate(registration.name)
       : getHebrewTemplate(registration.name);
 
     console.log("Sending email to:", registration.email);
-
-    // Initialize EmailJS with the public key
-    init({
-      publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY"),
-    });
 
     const emailResponse = await send(
       Deno.env.get("EMAILJS_SERVICE_ID") || '',
@@ -44,7 +43,7 @@ const handler = async (req: Request): Promise<Response> => {
         language: registration.language
       },
       {
-        publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY"),
+        publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY") || '',
       }
     );
 

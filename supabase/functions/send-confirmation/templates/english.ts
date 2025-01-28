@@ -1,61 +1,11 @@
-import { getCalendarLinks } from '../utils.ts';
-
-export const getEnglishTemplate = (name: string) => {
-  const { google, outlook } = getCalendarLinks();
-  return {
-    subject: "Welcome to Microsoft Copilot Conference!",
-    html: `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <style>
-      @media only screen and (max-width: 600px) {
-        .button-container { flex-direction: column !important; }
-        .calendar-button { width: 100% !important; margin: 8px 0 !important; }
-      }
-    </style>
-</head>
-<body style="margin: 0; padding: 0; font-family: Arial, sans-serif; line-height: 1.6;">
-    <div style="max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F8F9FA;">
-      <div style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
-        <div style="background: linear-gradient(135deg, #9b87f5 0%, #8067f0 100%); padding: 30px; text-align: center;">
-          <img src="https://logos-world.net/wp-content/uploads/2023/10/Microsoft-Copilot-Logo.png" 
-               alt="Microsoft Copilot Logo" 
-               style="max-width: 200px; height: auto; margin-bottom: 15px;">
-          <h1 style="color: white; margin: 0; font-size: 28px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">Registration Confirmed!</h1>
-        </div>
-        
-        <div style="background-color: #ffffff; padding: 32px;">
-          <p style="margin-top: 0; font-size: 16px; color: #333;">Dear <strong>${name}</strong>,</p>
-          
-          <p style="font-size: 16px; color: #333;">Thank you for registering for the Microsoft Copilot Conference! We're excited to have you join us for this transformative event.</p>
-          
-          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 24px 0;">
-            <h2 style="color: #9b87f5; margin-top: 0; font-size: 20px;">Event Details</h2>
-            <p style="margin: 8px 0;"><strong>📍 Location:</strong><br>Microsoft Tel Aviv offices at Reactor<br>Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor)</p>
-            <p style="margin: 8px 0;"><strong>📅 Date:</strong><br>March 5th, 2025</p>
-            <p style="margin: 8px 0;"><strong>⏰ Time:</strong><br>17:00 - 20:00</p>
-            <p style="margin: 8px 0;"><strong>🔗 Event Website:</strong><br><a href="https://copilot-conference-hub.lovable.app/" style="color: #9b87f5; text-decoration: none;">copilot-conference-hub.lovable.app</a></p>
-          </div>
-
-          <div style="margin: 24px 0;">
-            <h3 style="color: #9b87f5; margin-bottom: 16px;">Add to Your Calendar</h3>
-            <div class="button-container" style="display: flex; flex-direction: column; gap: 16px;">
-              <a href="${google}" target="_blank" class="calendar-button" style="display: inline-block; background-color: #9b87f5; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Google Calendar</a>
-              <a href="${outlook}" download="copilot-conference.ics" class="calendar-button" style="display: inline-block; background-color: #FFD700; color: black; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Outlook Calendar</a>
-            </div>
-          </div>
-          
-          <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
-          
-          <p style="color: #666; font-style: italic;">We look forward to seeing you at the event!</p>
-          <p style="color: #666; margin-bottom: 0;">Best regards,<br><strong>The Microsoft Copilot Team</strong></p>
-        </div>
-      </div>
-    </div>
-</body>
-</html>`
-  };
-};
+export const getEnglishTemplate = (name: string) => ({
+  subject: 'Registration Confirmation',
+  html: `
+    <h1>Thank you for registering, ${name}!</h1>
+    <p>Your registration has been received successfully.</p>
+    <p>We look forward to seeing you at the event.</p>
+    <br>
+    <p>Best regards,</p>
+    <p>The Event Team</p>
+  `
+});
