@@ -17,10 +17,6 @@ interface RegistrationEmail {
 }
 
 const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
-  if (forOutlook) {
-    return `${date}T${time}:00`;
-  }
-  
   const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
@@ -28,15 +24,24 @@ const formatDateForCalendar = (date: string, time: string, forOutlook = false) =
 const getCalendarLinks = () => {
   const startTime = formatDateForCalendar('2025-03-05', '17:00');
   const endTime = formatDateForCalendar('2025-03-05', '20:00');
-  const outlookStartTime = formatDateForCalendar('2025-03-05', '17:00', true);
-  const outlookEndTime = formatDateForCalendar('2025-03-05', '20:00', true);
   
   const location = "Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor, Tel Aviv)";
   const eventTitle = "Microsoft Copilot Conference";
   const description = "Join us for an exciting Copilot Conference! More details at: https://copilot-conference-hub.lovable.app/";
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
-  const outlookLink = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&body=${encodeURIComponent(description)}&startdt=${outlookStartTime}&enddt=${outlookEndTime}&location=${encodeURIComponent(location)}`;
+  
+  // Using .ics format for Outlook which doesn't require authentication
+  const outlookLink = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+DTSTART:${startTime}
+DTEND:${endTime}
+SUMMARY:${eventTitle}
+DESCRIPTION:${description}
+LOCATION:${location}
+END:VEVENT
+END:VCALENDAR`.replace(/\n/g, '%0A');
 
   return { googleLink, outlookLink };
 };
@@ -72,7 +77,7 @@ const getEnglishTemplate = (name: string) => {
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>Add to your calendar:</strong></p>
             <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">Add to Google Calendar</a>
-            <a href="${outlookLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add to Outlook</a>
+            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add to Outlook</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -116,7 +121,7 @@ const getHebrewTemplate = (name: string) => {
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>הוסף ליומן שלך:</strong></p>
             <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">הוסף ליומן Google</a>
-            <a href="${outlookLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Outlook</a>
+            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Outlook</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -158,7 +163,6 @@ const handler = async (req: Request): Promise<Response> => {
     };
 
     console.log("Sending email via EmailJS to:", registration.email);
-    console.log("Email payload:", JSON.stringify(emailjsPayload, null, 2));
     
     const res = await fetch(emailjsEndpoint, {
       method: "POST",
