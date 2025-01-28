@@ -30,16 +30,7 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  const outlookLink = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-DTSTART:${startTime}
-DTEND:${endTime}
-SUMMARY:${eventTitle}
-DESCRIPTION:${description}
-LOCATION:${location}
-END:VEVENT
-END:VCALENDAR`.replace(/\n/g, '%0A');
+  const outlookLink = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0ADTSTART:${startTime}%0ADTEND:${endTime}%0ASUMMARY:${eventTitle}%0ADESCRIPTION:${description}%0ALOCATION:${location}%0AEND:VEVENT%0AEND:VCALENDAR`;
 
   return { googleLink, outlookLink };
 };
@@ -92,8 +83,8 @@ const getEnglishTemplate = (name: string) => {
           <div style="margin: 24px 0;">
             <h3 style="color: #9b87f5; margin-bottom: 16px;">Add to Your Calendar</h3>
             <div class="button-container" style="display: flex; flex-direction: column; gap: 16px;">
-              <a href="${googleLink}" class="calendar-button" style="display: inline-block; background-color: #9b87f5; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Google Calendar</a>
-              <a href="${outlookLink}" download="copilot-conference.ics" class="calendar-button" style="display: inline-block; background-color: #8067f0; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Outlook Calendar</a>
+              <a href="${googleLink}" target="_blank" class="calendar-button" style="display: inline-block; background-color: #9b87f5; color: white; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Google Calendar</a>
+              <a href="${outlookLink}" download="copilot-conference.ics" class="calendar-button" style="display: inline-block; background-color: #FFD700; color: black; padding: 14px 24px; text-decoration: none; border-radius: 8px; text-align: center; font-weight: bold; transition: background-color 0.3s ease;">Add to Outlook Calendar</a>
             </div>
           </div>
           
