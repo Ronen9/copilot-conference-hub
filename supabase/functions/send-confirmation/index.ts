@@ -1,8 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { Resend } from "npm:resend@2.0.0";
 
-const EMAILJS_PUBLIC_KEY = "nwBHzISaQ4b1Qomp-";
-const EMAILJS_SERVICE_ID = "service_tvmk8uo";
-const EMAILJS_TEMPLATE_ID = "template_h6rpozq";
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -16,7 +15,7 @@ interface RegistrationEmail {
   language: 'en' | 'he';
 }
 
-const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
+const formatDateForCalendar = (date: string, time: string) => {
   const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
@@ -31,7 +30,6 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  // Using .ics format for Outlook which doesn't require authentication
   const outlookLink = `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
@@ -50,7 +48,14 @@ const getEnglishTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "Welcome to Copilot Conference!",
-    html_message: `
+    html: `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -88,7 +93,8 @@ const getEnglishTemplate = (name: string) => {
         </div>
       </div>
     </div>
-    `
+</body>
+</html>`
   };
 };
 
@@ -96,7 +102,14 @@ const getHebrewTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "ברוכים הבאים לכנס Copilot!",
-    html_message: `
+    html: `<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, sans-serif;">
     <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -134,7 +147,8 @@ const getHebrewTemplate = (name: string) => {
         </div>
       </div>
     </div>
-    `
+</body>
+</html>`
   };
 };
 
@@ -151,48 +165,21 @@ const handler = async (req: Request): Promise<Response> => {
       ? getEnglishTemplate(registration.name)
       : getHebrewTemplate(registration.name);
 
-    // EmailJS API endpoint
-    const emailjsEndpoint = "https://api.emailjs.com/api/v1.0/email/send";
+    console.log("Sending email to:", registration.email);
     
-    const emailjsPayload = {
-      service_id: EMAILJS_SERVICE_ID,
-      template_id: EMAILJS_TEMPLATE_ID,
-      user_id: EMAILJS_PUBLIC_KEY,
-      template_params: {
-        to_email: registration.email,
-        subject: template.subject,
-        html_message: template.html_message,
-        email_to: registration.email,
-      },
-    };
-
-    console.log("Sending email via EmailJS to:", registration.email);
-    
-    const res = await fetch(emailjsEndpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Origin": "https://copilot-conference-hub.lovable.app",
-        "Referer": "https://copilot-conference-hub.lovable.app/",
-      },
-      body: JSON.stringify(emailjsPayload),
+    const emailResponse = await resend.emails.send({
+      from: "Copilot Conference <onboarding@resend.dev>",
+      to: [registration.email],
+      subject: template.subject,
+      html: template.html,
+      text: "If you're seeing this text, your email client doesn't support HTML emails. Please visit https://copilot-conference-hub.lovable.app/ for more information.",
     });
 
-    const responseText = await res.text();
-    console.log("EmailJS API response:", responseText);
+    console.log("Email sent successfully:", emailResponse);
 
-    if (res.ok) {
-      console.log("Email sent successfully to:", registration.email);
-      return new Response(JSON.stringify({ success: true }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    } else {
-      console.error("EmailJS API error:", responseText);
-      return new Response(JSON.stringify({ error: responseText }), {
-        status: 400,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error("Error in send-confirmation function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
