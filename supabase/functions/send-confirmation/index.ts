@@ -76,8 +76,10 @@ const getEnglishTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>Add to your calendar:</strong></p>
-            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">Add to Google Calendar</a>
-            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add to Outlook</a>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Add to Google Calendar</a>
+              <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Add to Outlook</a>
+            </div>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -120,8 +122,10 @@ const getHebrewTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>הוסף ליומן שלך:</strong></p>
-            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">הוסף ליומן Google</a>
-            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Outlook</a>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">הוסף ליומן Google</a>
+              <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">הוסף ליומן Outlook</a>
+            </div>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
