@@ -43,7 +43,9 @@ const getCalendarLinks = () => {
 
 const getEnglishTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
-  return `
+  return {
+    subject: "Welcome to Copilot Conference!",
+    template: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -54,7 +56,7 @@ const getEnglishTemplate = (name: string) => {
         </div>
         
         <div style="background-color: #ffffff; padding: 24px;">
-          <p style="margin-top: 0;">Dear ${name},</p>
+          <p style="margin-top: 0;">Dear {{name}},</p>
           
           <p>Thank you for registering for our Copilot Conference!</p>
           
@@ -79,12 +81,15 @@ const getEnglishTemplate = (name: string) => {
         </div>
       </div>
     </div>
-  `;
+    `
+  };
 };
 
 const getHebrewTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
-  return `
+  return {
+    subject: "ברוכים הבאים לכנס Copilot!",
+    template: `
     <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -95,7 +100,7 @@ const getHebrewTemplate = (name: string) => {
         </div>
         
         <div style="background-color: #ffffff; padding: 24px;">
-          <p style="margin-top: 0;">שלום ${name},</p>
+          <p style="margin-top: 0;">שלום {{name}},</p>
           
           <p>תודה על הרשמתך לכנס Copilot!</p>
           
@@ -120,12 +125,12 @@ const getHebrewTemplate = (name: string) => {
         </div>
       </div>
     </div>
-  `;
+    `
+  };
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  console.log("Processing confirmation email request");
-  
+  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -134,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
     const registration: RegistrationEmail = await req.json();
     console.log("Received registration:", registration);
 
-    const emailTemplate = registration.language === 'en' 
+    const template = registration.language === 'en' 
       ? getEnglishTemplate(registration.name)
       : getHebrewTemplate(registration.name);
 
@@ -146,12 +151,15 @@ const handler = async (req: Request): Promise<Response> => {
       template_id: EMAILJS_TEMPLATE_ID,
       user_id: EMAILJS_PUBLIC_KEY,
       template_params: {
+        to_name: registration.name,
         to_email: registration.email,
-        message_html: emailTemplate,
+        subject: template.subject,
+        message_html: template.template,
       },
     };
 
     console.log("Sending email via EmailJS to:", registration.email);
+    console.log("Email payload:", emailjsPayload);
     
     const res = await fetch(emailjsEndpoint, {
       method: "POST",
