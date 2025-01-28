@@ -25,16 +25,20 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Validate required environment variables
     const publicKey = Deno.env.get("EMAILJS_PUBLIC_KEY");
+    const privateKey = Deno.env.get("EMAILJS_PRIVATE_KEY");
     const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
     const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
 
-    if (!publicKey || !serviceId || !templateId) {
+    if (!publicKey || !privateKey || !serviceId || !templateId) {
       console.error("Missing required environment variables");
       throw new Error("Missing required environment variables");
     }
 
-    // Initialize EmailJS with the public key
-    init(publicKey);
+    // Initialize EmailJS with both public and private keys for server-side usage
+    init({
+      publicKey: publicKey,
+      privateKey: privateKey
+    });
 
     const templateParams = {
       to_name: name,
@@ -54,6 +58,7 @@ const handler = async (req: Request): Promise<Response> => {
       templateParams,
       {
         publicKey: publicKey,
+        privateKey: privateKey
       }
     );
 
