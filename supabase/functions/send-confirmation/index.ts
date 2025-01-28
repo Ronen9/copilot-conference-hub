@@ -45,7 +45,7 @@ const getEnglishTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "Welcome to Copilot Conference!",
-    content: `
+    html_message: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -89,7 +89,7 @@ const getHebrewTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "ברוכים הבאים לכנס Copilot!",
-    content: `
+    html_message: `
     <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -151,10 +151,8 @@ const handler = async (req: Request): Promise<Response> => {
       user_id: EMAILJS_PUBLIC_KEY,
       template_params: {
         to_email: registration.email,
-        to_name: registration.name,
         subject: template.subject,
-        message_html: template.content,
-        message: template.content,
+        html_message: template.html_message,
         email_to: registration.email,
       },
     };
