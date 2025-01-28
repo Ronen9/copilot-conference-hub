@@ -5,8 +5,8 @@ const EMAILJS_SERVICE_ID = "service_tvmk8uo";
 const EMAILJS_TEMPLATE_ID = "template_h6rpozq";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
 interface RegistrationEmail {
@@ -45,7 +45,7 @@ const getEnglishTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "Welcome to Copilot Conference!",
-    template: `
+    content: `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -56,7 +56,7 @@ const getEnglishTemplate = (name: string) => {
         </div>
         
         <div style="background-color: #ffffff; padding: 24px;">
-          <p style="margin-top: 0;">Dear {{name}},</p>
+          <p style="margin-top: 0;">Dear ${name},</p>
           
           <p>Thank you for registering for our Copilot Conference!</p>
           
@@ -89,7 +89,7 @@ const getHebrewTemplate = (name: string) => {
   const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "ברוכים הבאים לכנס Copilot!",
-    template: `
+    content: `
     <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #F1F0FB;">
       <div style="background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); overflow: hidden;">
         <div style="background-color: #9b87f5; padding: 20px; text-align: center;">
@@ -100,7 +100,7 @@ const getHebrewTemplate = (name: string) => {
         </div>
         
         <div style="background-color: #ffffff; padding: 24px;">
-          <p style="margin-top: 0;">שלום {{name}},</p>
+          <p style="margin-top: 0;">שלום ${name},</p>
           
           <p>תודה על הרשמתך לכנס Copilot!</p>
           
@@ -151,15 +151,18 @@ const handler = async (req: Request): Promise<Response> => {
       template_id: EMAILJS_TEMPLATE_ID,
       user_id: EMAILJS_PUBLIC_KEY,
       template_params: {
-        to_name: registration.name,
         to_email: registration.email,
+        reply_to: registration.email,
+        from_name: "Copilot Conference",
+        to_name: registration.name,
         subject: template.subject,
-        message_html: template.template,
+        html_content: template.content,
+        message: template.content,
       },
     };
 
     console.log("Sending email via EmailJS to:", registration.email);
-    console.log("Email payload:", emailjsPayload);
+    console.log("Email payload:", JSON.stringify(emailjsPayload, null, 2));
     
     const res = await fetch(emailjsEndpoint, {
       method: "POST",
@@ -172,23 +175,22 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify(emailjsPayload),
     });
 
-    const responseData = await res.text();
-    console.log("EmailJS API response:", responseData);
+    const responseText = await res.text();
+    console.log("EmailJS API response:", responseText);
 
     if (res.ok) {
       console.log("Email sent successfully to:", registration.email);
       return new Response(JSON.stringify({ success: true }), {
-        status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     } else {
-      console.error("EmailJS API error:", responseData);
-      return new Response(JSON.stringify({ error: responseData }), {
+      console.error("EmailJS API error:", responseText);
+      return new Response(JSON.stringify({ error: responseText }), {
         status: 400,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error in send-confirmation function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
