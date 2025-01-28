@@ -1,13 +1,17 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { init, send } from "npm:@emailjs/nodejs";
-import { corsHeaders } from './utils.ts';
-import { getEnglishTemplate } from './templates/english.ts';
-import { getHebrewTemplate } from './templates/hebrew.ts';
+import { Resend } from "npm:resend@2.0.0";
 
-interface RegistrationEmail {
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
+
+interface EmailRequest {
   name: string;
   email: string;
-  company: string;
+  company?: string;
   language: 'en' | 'he';
 }
 
@@ -18,41 +22,49 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const registration: RegistrationEmail = await req.json();
-    console.log("Received registration:", registration);
+    const { name, email, company, language }: EmailRequest = await req.json();
+    console.log("Received request:", { name, email, company, language });
 
-    // Initialize EmailJS with the public key
-    init({
-      publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY") || '',
+    const subject = language === 'en' ? 'Registration Confirmation' : 'אישור הרשמה';
+    const htmlContent = language === 'en' 
+      ? `
+        <h1>Thank you for registering, ${name}!</h1>
+        <p>Your registration has been received successfully.</p>
+        ${company ? `<p>Company: ${company}</p>` : ''}
+        <p>We look forward to seeing you at the event.</p>
+        <br>
+        <p>Best regards,</p>
+        <p>The Event Team</p>
+      `
+      : `
+        <div dir="rtl">
+          <h1>תודה על ההרשמה, ${name}!</h1>
+          <p>הרשמתך התקבלה בהצלחה.</p>
+          ${company ? `<p>חברה: ${company}</p>` : ''}
+          <p>אנחנו מצפים לראותך באירוע.</p>
+          <br>
+          <p>בברכה,</p>
+          <p>צוות האירוע</p>
+        </div>
+      `;
+
+    const emailResponse = await resend.emails.send({
+      from: "Copilot Event <onboarding@resend.dev>",
+      to: [email],
+      subject: subject,
+      html: htmlContent,
     });
-
-    const template = registration.language === 'en' 
-      ? getEnglishTemplate(registration.name)
-      : getHebrewTemplate(registration.name);
-
-    console.log("Sending email to:", registration.email);
-
-    const emailResponse = await send(
-      Deno.env.get("EMAILJS_SERVICE_ID") || '',
-      Deno.env.get("EMAILJS_TEMPLATE_ID") || '',
-      {
-        to_email: registration.email,
-        to_name: registration.name,
-        subject: template.subject,
-        message: template.html,
-        language: registration.language
-      },
-      {
-        publicKey: Deno.env.get("EMAILJS_PUBLIC_KEY") || '',
-      }
-    );
 
     console.log("Email sent successfully:", emailResponse);
 
-    return new Response(JSON.stringify({ success: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    return new Response(JSON.stringify(emailResponse), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+        ...corsHeaders,
+      },
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error in send-confirmation function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
