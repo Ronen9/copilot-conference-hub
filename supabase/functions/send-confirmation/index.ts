@@ -191,7 +191,7 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     await client.send({
-      from: "Microsoft Copilot Conference <copilot.conference@gmail.com>",
+      from: `Microsoft Copilot Conference <${Deno.env.get("GMAIL_USER")}>`,
       to: registration.email,
       subject: template.subject,
       html: template.html,
