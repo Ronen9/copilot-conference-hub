@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { init, send } from "npm:@emailjs/nodejs";
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -20,47 +20,46 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, company, language }: EmailRequest = await req.json();
-    console.log("Received request:", { name, email, company, language });
-
-    // Validate required environment variables
-    const privateKey = Deno.env.get("EMAILJS_PRIVATE_KEY");
-    const publicKey = Deno.env.get("EMAILJS_PUBLIC_KEY");
-    const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
-    const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
-
-    if (!privateKey || !publicKey || !serviceId || !templateId) {
-      console.error("Missing required environment variables");
-      throw new Error("Missing required environment variables");
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      throw new Error("Missing RESEND_API_KEY environment variable");
     }
 
-    // Initialize EmailJS with both private and public keys
-    init({
-      publicKey: publicKey,
-      privateKey: privateKey,
+    const resend = new Resend(resendApiKey);
+    const { name, email, company, language }: EmailRequest = await req.json();
+    
+    console.log("Sending confirmation email to:", email);
+
+    const subject = language === 'en' ? 'Registration Confirmation' : 'אישור הרשמה';
+    const message = language === 'en' 
+      ? `Thank you for registering, ${name}! We look forward to seeing you at the event.`
+      : `תודה על ההרשמה ${name}! אנחנו מצפים לראותך באירוע.`;
+    
+    const companyInfo = company ? (language === 'en' 
+      ? `\nCompany: ${company}` 
+      : `\nחברה: ${company}`) : '';
+
+    const emailResponse = await resend.emails.send({
+      from: "Microsoft Copilot Event <onboarding@resend.dev>",
+      to: [email],
+      subject: subject,
+      html: `
+        <div dir="${language === 'he' ? 'rtl' : 'ltr'}" style="font-family: Arial, sans-serif;">
+          <h2>${message}</h2>
+          ${companyInfo}
+          <p style="margin-top: 20px;">
+            ${language === 'en' 
+              ? 'Best regards,<br>The Microsoft Copilot Team' 
+              : 'בברכה,<br>צוות Microsoft Copilot'}
+          </p>
+        </div>
+      `,
     });
-
-    const templateParams = {
-      to_name: name,
-      to_email: email,
-      company: company || '',
-      subject: language === 'en' ? 'Registration Confirmation' : 'אישור הרשמה',
-      message: language === 'en' 
-        ? `Thank you for registering! We look forward to seeing you at the event.`
-        : `תודה על ההרשמה! אנחנו מצפים לראותך באירוע.`,
-    };
-
-    console.log("Sending email with params:", templateParams);
-
-    const emailResponse = await send(
-      serviceId,
-      templateId,
-      templateParams
-    );
 
     console.log("Email sent successfully:", emailResponse);
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify(emailResponse), {
+      status: 200,
       headers: {
         "Content-Type": "application/json",
         ...corsHeaders,
@@ -68,7 +67,6 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error) {
     console.error("Error in send-confirmation function:", error);
-    
     return new Response(
       JSON.stringify({ 
         error: "An error occurred while sending the confirmation email",
