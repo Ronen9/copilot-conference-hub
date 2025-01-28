@@ -24,12 +24,11 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Received request:", { name, email, company, language });
 
     // Validate required environment variables
-    const publicKey = Deno.env.get("EMAILJS_PUBLIC_KEY");
     const privateKey = Deno.env.get("EMAILJS_PRIVATE_KEY");
     const serviceId = Deno.env.get("EMAILJS_SERVICE_ID");
     const templateId = Deno.env.get("EMAILJS_TEMPLATE_ID");
 
-    if (!publicKey || !privateKey || !serviceId || !templateId) {
+    if (!privateKey || !serviceId || !templateId) {
       console.error("Missing required environment variables");
       throw new Error("Missing required environment variables");
     }
@@ -52,11 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await send(
       serviceId,
       templateId,
-      templateParams,
-      {
-        publicKey,
-        privateKey,
-      }
+      templateParams
     );
 
     console.log("Email sent successfully:", emailResponse);
