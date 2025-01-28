@@ -130,7 +130,6 @@ const getHebrewTemplate = (name: string) => {
 };
 
 const handler = async (req: Request): Promise<Response> => {
-  // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
@@ -156,9 +155,7 @@ const handler = async (req: Request): Promise<Response> => {
         subject: template.subject,
         message_html: template.content,
         message: template.content,
-        email_to: registration.email, // Add this explicit field
-        recipient: registration.email, // Add another variation
-        destination_email: registration.email, // And another
+        email_to: registration.email,
       },
     };
 
