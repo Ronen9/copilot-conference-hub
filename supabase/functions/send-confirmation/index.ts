@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
+import { Resend } from "npm:resend@2.0.0";
 
-const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -15,11 +16,14 @@ interface RegistrationEmail {
 
 const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
   if (forOutlook) {
-    // For Outlook, we need to keep the time as is and just format it correctly
-    return `${date}T${time}:00`;
+    // For Outlook, we'll use a simpler format that's more widely compatible
+    const [hours, minutes] = time.split(':');
+    const dateObj = new Date(date);
+    dateObj.setHours(parseInt(hours), parseInt(minutes));
+    return dateObj.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
   }
   
-  // For Google Calendar, we keep the existing format
+  // For Google Calendar, keep the existing format
   const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 };
@@ -36,7 +40,8 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  const outlookLink = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&body=${encodeURIComponent(description)}&startdt=${outlookStartTime}&enddt=${outlookEndTime}&location=${encodeURIComponent(location)}`;
+  // Updated Outlook calendar link format
+  const outlookLink = `https://outlook.live.com/calendar/0/action/compose?subject=${encodeURIComponent(eventTitle)}&body=${encodeURIComponent(description)}&startdt=${outlookStartTime}&enddt=${outlookEndTime}&location=${encodeURIComponent(location)}`;
 
   return { googleLink, outlookLink };
 };
@@ -129,12 +134,6 @@ const getHebrewTemplate = (name: string) => {
   };
 };
 
-const getEmailTemplate = (registration: RegistrationEmail) => {
-  return registration.language === 'en' 
-    ? getEnglishTemplate(registration.name)
-    : getHebrewTemplate(registration.name);
-};
-
 const handler = async (req: Request): Promise<Response> => {
   console.log("Processing confirmation email request");
   
@@ -146,13 +145,13 @@ const handler = async (req: Request): Promise<Response> => {
     const registration: RegistrationEmail = await req.json();
     console.log("Received registration:", registration);
 
-    const emailTemplate = getEmailTemplate(registration);
+    const emailTemplate = registration.language === 'en' ? getEnglishTemplate(registration.name) : getHebrewTemplate(registration.name);
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Bearer ${Deno.env.get("RESEND_API_KEY")}`,
       },
       body: JSON.stringify({
         from: "Copilot Conference <onboarding@resend.dev>",
