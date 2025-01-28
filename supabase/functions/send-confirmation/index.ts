@@ -168,6 +168,9 @@ const handler = async (req: Request): Promise<Response> => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Origin": "https://copilot-conference-hub.lovable.app",
+        "Referer": "https://copilot-conference-hub.lovable.app/",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
       },
       body: JSON.stringify(emailjsPayload),
     });
