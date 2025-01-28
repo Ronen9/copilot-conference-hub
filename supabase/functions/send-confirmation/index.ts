@@ -76,7 +76,7 @@ const getEnglishTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>Add to your calendar:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
               <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Add to Google Calendar</a>
               <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">Add to Outlook</a>
             </div>
@@ -122,7 +122,7 @@ const getHebrewTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>הוסף ליומן שלך:</strong></p>
-            <div style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
               <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">הוסף ליומן Google</a>
               <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center;">הוסף ליומן Outlook</a>
             </div>
