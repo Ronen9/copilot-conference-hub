@@ -20,12 +20,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    if (!resendApiKey) {
-      throw new Error("Missing RESEND_API_KEY environment variable");
-    }
-
-    const resend = new Resend(resendApiKey);
+    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
     const { name, email, company, language }: EmailRequest = await req.json();
     
     console.log("Sending confirmation email to:", email);
