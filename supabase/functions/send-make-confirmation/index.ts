@@ -144,8 +144,8 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    // Add https:// if not present in the webhook URL
-    const fullWebhookUrl = webhookUrl.startsWith('https://') ? webhookUrl : `https://${webhookUrl}`;
+    // Ensure the webhook URL is properly formatted
+    const fullWebhookUrl = webhookUrl.includes('://') ? webhookUrl : `https://hook.eu2.make.com/${webhookUrl}`;
     console.log("Sending data to webhook URL:", fullWebhookUrl);
 
     const response = await fetch(fullWebhookUrl, {
