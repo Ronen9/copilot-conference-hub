@@ -144,7 +144,11 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    const response = await fetch(webhookUrl, {
+    // Add https:// if not present in the webhook URL
+    const fullWebhookUrl = webhookUrl.startsWith('https://') ? webhookUrl : `https://${webhookUrl}`;
+    console.log("Sending data to webhook URL:", fullWebhookUrl);
+
+    const response = await fetch(fullWebhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +157,9 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     if (!response.ok) {
-      throw new Error(`Webhook request failed: ${response.statusText}`);
+      const errorText = await response.text();
+      console.error("Webhook error response:", errorText);
+      throw new Error(`Webhook request failed: ${response.statusText}. Error: ${errorText}`);
     }
 
     const result = await response.json();
