@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { getEmailTemplate, RegistrationEmail } from "./utils/emailTemplate.ts";
+import { getEmailTemplate, getEmailSubject, RegistrationEmail } from "./utils/emailTemplate.ts";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -23,13 +23,16 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const emailHtml = getEmailTemplate(registration);
+    const emailSubject = getEmailSubject(registration.language);
     
     const webhookData = {
       name: registration.name,
       email: registration.email,
+      phone: registration.phone,
       company: registration.company || '',
       language: registration.language,
-      emailHtml: emailHtml
+      emailHtml: emailHtml,
+      emailSubject: emailSubject
     };
 
     console.log("Using webhook URL:", webhookUrl);

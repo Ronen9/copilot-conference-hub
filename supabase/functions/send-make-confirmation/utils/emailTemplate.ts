@@ -4,6 +4,7 @@ export interface RegistrationEmail {
   name: string;
   email: string;
   company: string;
+  phone: string;
   language: 'en' | 'he';
 }
 
@@ -107,4 +108,10 @@ export const getEmailTemplate = (registration: RegistrationEmail): string => {
     </body>
     </html>`;
   }
+};
+
+export const getEmailSubject = (language: 'en' | 'he'): string => {
+  return language === 'en' 
+    ? "Registration Confirmation - Microsoft Copilot Conference"
+    : "אישור הרשמה - כנס Microsoft Copilot";
 };
