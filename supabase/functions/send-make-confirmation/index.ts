@@ -144,9 +144,18 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    // Construct the full webhook URL - Make.com uses a specific format
-    const fullWebhookUrl = `https://hook.eu2.make.com/${webhookUrl}`;
-    console.log("Sending data to webhook URL:", fullWebhookUrl);
+    // Construct the full webhook URL with proper error handling
+    let fullWebhookUrl: string;
+    try {
+      // Check if the webhook URL is already a complete URL
+      new URL(webhookUrl);
+      fullWebhookUrl = webhookUrl;
+    } catch {
+      // If not, assume it's a webhook ID and construct the full URL
+      fullWebhookUrl = `https://hook.eu2.make.com/${webhookUrl}`;
+    }
+    
+    console.log("Attempting to send data to webhook URL:", fullWebhookUrl);
 
     const response = await fetch(fullWebhookUrl, {
       method: 'POST',
@@ -158,10 +167,12 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("Webhook error response:", errorText);
-      console.error("Response status:", response.status);
-      console.error("Response status text:", response.statusText);
-      throw new Error(`Webhook request failed: ${response.statusText}. Error: ${errorText}`);
+      console.error("Webhook error details:");
+      console.error("Status:", response.status);
+      console.error("Status text:", response.statusText);
+      console.error("Response body:", errorText);
+      console.error("Request URL:", fullWebhookUrl);
+      throw new Error(`Webhook request failed (${response.status}): ${errorText}`);
     }
 
     const result = await response.json();
@@ -173,6 +184,7 @@ const handler = async (req: Request): Promise<Response> => {
     });
   } catch (error: any) {
     console.error("Error in send-make-confirmation function:", error);
+    console.error("Error stack:", error.stack);
     return new Response(
       JSON.stringify({ error: error.message }),
       {
