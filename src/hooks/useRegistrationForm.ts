@@ -51,7 +51,9 @@ export const useRegistrationForm = () => {
         body: {
           name: registration.name,
           email: registration.email,
+          phone: registration.phone,
           company: registration.company,
+          title: registration.title,
           language: language
         }
       });

@@ -5,6 +5,7 @@ export interface RegistrationEmail {
   email: string;
   company: string;
   phone: string;
+  title: string;
   language: 'en' | 'he';
 }
 

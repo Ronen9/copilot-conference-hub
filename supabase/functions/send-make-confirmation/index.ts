@@ -29,6 +29,7 @@ const handler = async (req: Request): Promise<Response> => {
       name: registration.name,
       email: registration.email,
       phone: registration.phone,
+      title: registration.title,
       company: registration.company || '',
       language: registration.language,
       emailHtml: emailHtml,
