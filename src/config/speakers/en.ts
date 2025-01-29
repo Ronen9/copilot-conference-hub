@@ -41,6 +41,6 @@ export const englishSpeakers: Speaker[] = [
     title: "Senior Data & ML Scientist",
     topic: "AI Most Popular Productivity Tools",
     company: "Lusha",
-    videoUrl: "https://media.licdn.com/dms/image/v2/D4D03AQH0y1xC0sUsMQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1730013126859?e=1741219200&v=beta&t=shvlsXG3vphofnRrv836kjJeKvcnYiYst2A31u_rtHI"
+    videoUrl: "https://www.youtube.com/watch?v=Am79d2xevh8"
   }
 ];
