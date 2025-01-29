@@ -13,7 +13,7 @@ const AgendaSection = () => {
       { time: "18:30", title: "Copilot studio", speaker: "עדי לייבוביץ" },
       { time: "18:50", title: "בופה חלבי" },
       { time: "19:10", title: "Github copilot", speaker: "אריק בידני" },
-      { time: "19:30", title: "Build your dream with AI", speaker: "יובל אבידני" },
+      { time: "19:30", title: "Developing with GenAI", speaker: "יובל אבידני" },
       { time: "19:50", title: "סיום האירוע עם מתנות פרידה" },
     ],
     en: [
@@ -23,7 +23,7 @@ const AgendaSection = () => {
       { time: "18:30", title: "Copilot Studio", speaker: "Adi Leibowitz" },
       { time: "18:50", title: "Dinner" },
       { time: "19:10", title: "Github Copilot", speaker: "Arik Bidny" },
-      { time: "19:30", title: "Build Your Dream with AI", speaker: "Yuval Avidani" },
+      { time: "19:30", title: "Developing with GenAI", speaker: "Yuval Avidani" },
       { time: "19:50", title: "End of event with farewell gifts" },
     ]
   };
