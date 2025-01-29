@@ -144,14 +144,10 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    // Ensure the webhook URL is properly formatted
-    const baseUrl = "https://hook.eu2.make.com";
-    const webhookPath = webhookUrl.replace(/^\/+/, '').replace(/^webhook\/+/, '');
-    const fullWebhookUrl = `${baseUrl}/webhook/${webhookPath}`;
-    
-    console.log("Using webhook URL:", fullWebhookUrl);
+    console.log("Using webhook URL:", webhookUrl);
+    console.log("Sending webhook data:", JSON.stringify(webhookData, null, 2));
 
-    const response = await fetch(fullWebhookUrl, {
+    const response = await fetch(webhookUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -165,8 +161,6 @@ const handler = async (req: Request): Promise<Response> => {
       console.error("Status:", response.status);
       console.error("Status text:", response.statusText);
       console.error("Response body:", errorText);
-      console.error("Request URL:", fullWebhookUrl);
-      console.error("Request body:", JSON.stringify(webhookData, null, 2));
       throw new Error(`Webhook request failed (${response.status}): ${errorText}`);
     }
 
