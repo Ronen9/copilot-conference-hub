@@ -112,8 +112,8 @@ export const useRegistrationForm = () => {
       toast({
         title: language === 'en' ? "Registration Successful" : "ההרשמה הושלמה בהצלחה",
         description: language === 'en' 
-          ? "Your registration details have been saved. Check your email for confirmation!"
-          : "פרטי ההרשמה שלך נשמרו במערכת. בדוק את האימייל שלך לקבלת אישור!",
+          ? "Your registration details have been saved. Check your email (including spam folder) for confirmation!"
+          : "פרטי ההרשמה שלך נשמרו במערכת. בדוק את האימייל שלך (כולל תיקיית דואר זבל) לקבלת אישור!",
       });
 
       setFormData(initialFormData);
