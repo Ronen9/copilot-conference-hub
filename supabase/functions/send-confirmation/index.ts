@@ -53,17 +53,11 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  // Generate data URI for .ics file with proper encoding
-  const icsContent = generateICSContent();
-  const icsBlob = new TextEncoder().encode(icsContent);
-  const icsBase64 = btoa(String.fromCharCode(...icsBlob));
-  const outlookLink = `data:text/calendar;charset=utf8;base64,${icsBase64}`;
-
-  return { googleLink, outlookLink };
+  return { googleLink };
 };
 
 const getEnglishTemplate = (name: string) => {
-  const { googleLink, outlookLink } = getCalendarLinks();
+  const { googleLink } = getCalendarLinks();
   return {
     subject: "Welcome to Copilot Conference!",
     html: `
@@ -93,7 +87,6 @@ const getEnglishTemplate = (name: string) => {
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>Add to your calendar:</strong></p>
             <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">Add to Google Calendar</a>
-            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Download Calendar File</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -107,7 +100,7 @@ const getEnglishTemplate = (name: string) => {
 };
 
 const getHebrewTemplate = (name: string) => {
-  const { googleLink, outlookLink } = getCalendarLinks();
+  const { googleLink } = getCalendarLinks();
   return {
     subject: "ברוכים הבאים לכנס Copilot!",
     html: `
@@ -136,8 +129,7 @@ const getHebrewTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>הוסף ליומן שלך:</strong></p>
-            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">הוסף ליומן Google</a>
-            <a href="${outlookLink}" download="copilot-conference.ics" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הורד קובץ יומן</a>
+            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Google</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -162,12 +154,19 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Received registration:", registration);
 
     const emailTemplate = registration.language === 'en' ? getEnglishTemplate(registration.name) : getHebrewTemplate(registration.name);
+    const icsContent = generateICSContent();
 
     const res = await resend.emails.send({
       from: "Copilot Conference <onboarding@resend.dev>",
       to: [registration.email],
       subject: emailTemplate.subject,
       html: emailTemplate.html,
+      attachments: [
+        {
+          filename: 'copilot-conference.ics',
+          content: icsContent,
+        },
+      ],
     });
 
     console.log("Email sent successfully:", res);
