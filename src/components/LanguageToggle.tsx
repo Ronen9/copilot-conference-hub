@@ -5,7 +5,7 @@ export const LanguageToggle = () => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="absolute left-4 -bottom-16 z-10">
+    <div className="absolute left-4 bottom-4 md:-bottom-16 z-10">
       <Toggle
         pressed={language === 'en'}
         onPressedChange={(pressed) => setLanguage(pressed ? 'en' : 'he')}
