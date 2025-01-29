@@ -53,9 +53,11 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  // Generate data URI for .ics file
+  // Generate data URI for .ics file with proper encoding
   const icsContent = generateICSContent();
-  const outlookLink = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
+  const icsBlob = new TextEncoder().encode(icsContent);
+  const icsBase64 = btoa(String.fromCharCode(...icsBlob));
+  const outlookLink = `data:text/calendar;charset=utf8;base64,${icsBase64}`;
 
   return { googleLink, outlookLink };
 };
