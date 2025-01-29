@@ -30,6 +30,30 @@ const triggerConfetti = () => {
   });
 };
 
+const generateICSContent = () => {
+  const startDate = '20250305T170000Z'; // March 5th, 2025, 17:00 UTC
+  const endDate = '20250305T200000Z';   // March 5th, 2025, 20:00 UTC
+  const location = "Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor, Tel Aviv)";
+  const description = "Join us for an exciting Copilot Conference! More details at: https://copilot-conference-hub.lovable.app/";
+
+  return `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Copilot Conference//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:${crypto.randomUUID()}
+SUMMARY:Microsoft Copilot Conference
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART:${startDate}
+DTEND:${endDate}
+DESCRIPTION:${description}
+LOCATION:${location}
+STATUS:CONFIRMED
+SEQUENCE:0
+END:VEVENT
+END:VCALENDAR`;
+};
+
 export const useRegistrationForm = () => {
   const { toast } = useToast();
   const { language } = useLanguage();
@@ -43,6 +67,17 @@ export const useRegistrationForm = () => {
     }));
   };
 
+  const downloadCalendarFile = () => {
+    const icsContent = generateICSContent();
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', 'copilot-conference.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const sendConfirmationEmail = async (registration: RegistrationFormData) => {
     try {
       console.log('Sending confirmation email for:', registration.email);
@@ -52,7 +87,7 @@ export const useRegistrationForm = () => {
           name: registration.name,
           email: registration.email,
           company: registration.company,
-          language: language // Add language to the payload
+          language: language
         }
       });
 
@@ -101,10 +136,8 @@ export const useRegistrationForm = () => {
 
       console.log('Registration submitted successfully');
       
-      // Send confirmation email
       await sendConfirmationEmail(formData);
       
-      // Trigger confetti effect on successful registration
       triggerConfetti();
       
       toast({
@@ -133,6 +166,7 @@ export const useRegistrationForm = () => {
     formData,
     isSubmitting,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    downloadCalendarFile
   };
 };
