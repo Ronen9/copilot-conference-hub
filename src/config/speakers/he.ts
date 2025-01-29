@@ -13,7 +13,7 @@ export const hebrewSpeakers: Speaker[] = [
     title: "Technical CX Specialist, BizApps",
     topic: "copilot sales & marketing",
     company: "Microsoft",
-    videoUrl: "https://www.youtube.com/watch?v=cpEM7J7Gwnc"
+    videoUrl: "https://www.youtube.com/watch?v=4FXqD4GCZLA"
   },
   {
     name: "אלכס יורפולסקי",
