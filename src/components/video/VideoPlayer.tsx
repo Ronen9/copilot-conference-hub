@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import YouTube from 'react-youtube';
 import { VideoProgress } from './VideoProgress';
 import { extractVideoId } from '@/utils/videoUtils';
+import { Button } from '../ui/button';
+import { Maximize2 } from 'lucide-react';
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -45,6 +47,17 @@ export const VideoPlayer = ({
     }
   };
 
+  const handleFullscreen = () => {
+    if (localPlayer) {
+      localPlayer.playVideo();
+      const iframe = document.querySelector(`iframe[src*="${videoId}"]`);
+      if (iframe) {
+        // @ts-ignore
+        iframe.requestFullscreen?.() || iframe.webkitRequestFullscreen?.() || iframe.mozRequestFullScreen?.() || iframe.msRequestFullscreen?.();
+      }
+    }
+  };
+
   const videoId = extractVideoId(videoUrl);
   console.log('Video URL:', videoUrl);
   console.log('Video ID extracted:', videoId);
@@ -68,7 +81,7 @@ export const VideoPlayer = ({
               origin: window.location.origin,
               endscreen: 0,
               iv_load_policy: 3,
-              fs: 0,
+              fs: 1,
               disablekb: 1,
               enablejsapi: 1,
               loop: 0,
@@ -106,6 +119,14 @@ export const VideoPlayer = ({
           iframeClassName="!rounded-lg"
         />
       </div>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="absolute bottom-2 left-2 bg-black/50 hover:bg-black/70 text-white z-10"
+        onClick={handleFullscreen}
+      >
+        <Maximize2 className="h-4 w-4" />
+      </Button>
       <VideoProgress
         duration={duration}
         currentTime={currentTime}
