@@ -144,18 +144,15 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    // Construct the full webhook URL with proper error handling
-    let fullWebhookUrl: string;
-    try {
-      // Check if the webhook URL is already a complete URL
-      new URL(webhookUrl);
-      fullWebhookUrl = webhookUrl;
-    } catch {
-      // If not, assume it's a webhook ID and construct the full URL
-      fullWebhookUrl = `https://hook.eu2.make.com/${webhookUrl}`;
-    }
+    // Log the webhook URL for debugging
+    console.log("Raw webhook URL from env:", webhookUrl);
+
+    // Always construct the full webhook URL with the EU2 domain
+    const fullWebhookUrl = webhookUrl.startsWith('http') 
+      ? webhookUrl 
+      : `https://hook.eu2.make.com/webhook/${webhookUrl}`;
     
-    console.log("Attempting to send data to webhook URL:", fullWebhookUrl);
+    console.log("Constructed webhook URL:", fullWebhookUrl);
 
     const response = await fetch(fullWebhookUrl, {
       method: 'POST',
@@ -172,6 +169,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.error("Status text:", response.statusText);
       console.error("Response body:", errorText);
       console.error("Request URL:", fullWebhookUrl);
+      console.error("Request body:", JSON.stringify(webhookData, null, 2));
       throw new Error(`Webhook request failed (${response.status}): ${errorText}`);
     }
 
