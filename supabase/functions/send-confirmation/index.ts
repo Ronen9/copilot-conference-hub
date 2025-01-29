@@ -1,7 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -14,38 +13,22 @@ interface RegistrationEmail {
   language: 'en' | 'he';
 }
 
-const formatDateForCalendar = (date: string, time: string) => {
+const formatDateForCalendar = (date: string, time: string, forOutlook = false) => {
+  if (forOutlook) {
+    // For Outlook, we need to keep the time as is and just format it correctly
+    return `${date}T${time}:00`;
+  }
+  
+  // For Google Calendar, we keep the existing format
   const eventDate = new Date(`${date}T${time}+02:00`);
   return eventDate.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-};
-
-const generateICSContent = () => {
-  const startDate = '20250305T170000Z'; // March 5th, 2025, 17:00 UTC
-  const endDate = '20250305T200000Z';   // March 5th, 2025, 20:00 UTC
-  const location = "Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor, Tel Aviv)";
-  const description = "Join us for an exciting Copilot Conference! More details at: https://copilot-conference-hub.lovable.app/";
-
-  return `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:-//Copilot Conference//EN
-CALSCALE:GREGORIAN
-BEGIN:VEVENT
-UID:${crypto.randomUUID()}
-SUMMARY:Microsoft Copilot Conference
-DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
-DTSTART:${startDate}
-DTEND:${endDate}
-DESCRIPTION:${description}
-LOCATION:${location}
-STATUS:CONFIRMED
-SEQUENCE:0
-END:VEVENT
-END:VCALENDAR`;
 };
 
 const getCalendarLinks = () => {
   const startTime = formatDateForCalendar('2025-03-05', '17:00');
   const endTime = formatDateForCalendar('2025-03-05', '20:00');
+  const outlookStartTime = formatDateForCalendar('2025-03-05', '17:00', true);
+  const outlookEndTime = formatDateForCalendar('2025-03-05', '20:00', true);
   
   const location = "Microsoft Tel Aviv offices at Reactor - Midtown Tel Aviv (144 Menachem Begin Rd., 50th floor, Tel Aviv)";
   const eventTitle = "Microsoft Copilot Conference";
@@ -53,11 +36,13 @@ const getCalendarLinks = () => {
 
   const googleLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(description)}&location=${encodeURIComponent(location)}`;
   
-  return { googleLink };
+  const outlookLink = `https://outlook.office.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&body=${encodeURIComponent(description)}&startdt=${outlookStartTime}&enddt=${outlookEndTime}&location=${encodeURIComponent(location)}`;
+
+  return { googleLink, outlookLink };
 };
 
 const getEnglishTemplate = (name: string) => {
-  const { googleLink } = getCalendarLinks();
+  const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "Welcome to Copilot Conference!",
     html: `
@@ -87,6 +72,7 @@ const getEnglishTemplate = (name: string) => {
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>Add to your calendar:</strong></p>
             <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-right: 10px;">Add to Google Calendar</a>
+            <a href="${outlookLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Add to Outlook</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -95,12 +81,12 @@ const getEnglishTemplate = (name: string) => {
         </div>
       </div>
     </div>
-    `
+  `
   };
 };
 
 const getHebrewTemplate = (name: string) => {
-  const { googleLink } = getCalendarLinks();
+  const { googleLink, outlookLink } = getCalendarLinks();
   return {
     subject: "ברוכים הבאים לכנס Copilot!",
     html: `
@@ -129,7 +115,8 @@ const getHebrewTemplate = (name: string) => {
 
           <div style="margin: 20px 0;">
             <p style="margin-bottom: 10px;"><strong>הוסף ליומן שלך:</strong></p>
-            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Google</a>
+            <a href="${googleLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-left: 10px;">הוסף ליומן Google</a>
+            <a href="${outlookLink}" style="display: inline-block; background-color: #9b87f5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">הוסף ליומן Outlook</a>
           </div>
           
           <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
@@ -138,8 +125,14 @@ const getHebrewTemplate = (name: string) => {
         </div>
       </div>
     </div>
-    `
+  `
   };
+};
+
+const getEmailTemplate = (registration: RegistrationEmail) => {
+  return registration.language === 'en' 
+    ? getEnglishTemplate(registration.name)
+    : getHebrewTemplate(registration.name);
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -153,28 +146,39 @@ const handler = async (req: Request): Promise<Response> => {
     const registration: RegistrationEmail = await req.json();
     console.log("Received registration:", registration);
 
-    const emailTemplate = registration.language === 'en' ? getEnglishTemplate(registration.name) : getHebrewTemplate(registration.name);
-    const icsContent = generateICSContent();
+    const emailTemplate = getEmailTemplate(registration);
 
-    const res = await resend.emails.send({
-      from: "Copilot Conference <onboarding@resend.dev>",
-      to: [registration.email],
-      subject: emailTemplate.subject,
-      html: emailTemplate.html,
-      attachments: [
-        {
-          filename: 'copilot-conference.ics',
-          content: icsContent,
-        },
-      ],
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: "Copilot Conference <onboarding@resend.dev>",
+        to: [registration.email],
+        subject: emailTemplate.subject,
+        html: emailTemplate.html,
+      }),
     });
 
-    console.log("Email sent successfully:", res);
+    console.log("Resend API response status:", res.status);
 
-    return new Response(JSON.stringify(res), {
-      status: 200,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    if (res.ok) {
+      const data = await res.json();
+      console.log("Email sent successfully:", data);
+      return new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    } else {
+      const error = await res.text();
+      console.error("Resend API error:", error);
+      return new Response(JSON.stringify({ error }), {
+        status: 400,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
   } catch (error: any) {
     console.error("Error in send-confirmation function:", error);
     return new Response(JSON.stringify({ error: error.message }), {
