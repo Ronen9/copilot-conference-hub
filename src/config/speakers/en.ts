@@ -39,7 +39,7 @@ export const englishSpeakers: Speaker[] = [
   {
     name: "Yuval Avidani",
     title: "Senior Data & ML Scientist",
-    topic: "AI Most Popular Productivity Tools",
+    topic: "GenAI Most Popular Development Tools",
     company: "Lusha",
     videoUrl: "https://www.youtube.com/watch?v=Am79d2xevh8"
   }
