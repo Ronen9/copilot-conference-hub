@@ -164,10 +164,19 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error(`Webhook request failed (${response.status}): ${errorText}`);
     }
 
-    const result = await response.json();
+    // Try to parse as JSON first, if it fails, return the text response
+    let result;
+    const responseText = await response.text();
+    try {
+      result = JSON.parse(responseText);
+    } catch {
+      // If response is not JSON, use the text response
+      result = { message: responseText };
+    }
+
     console.log("Webhook response:", result);
 
-    return new Response(JSON.stringify({ success: true }), {
+    return new Response(JSON.stringify({ success: true, result }), {
       status: 200,
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
