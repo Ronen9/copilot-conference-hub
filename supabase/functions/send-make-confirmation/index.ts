@@ -144,15 +144,12 @@ const handler = async (req: Request): Promise<Response> => {
       emailHtml: emailHtml
     };
 
-    // Log the webhook URL for debugging
-    console.log("Raw webhook URL from env:", webhookUrl);
-
-    // Always construct the full webhook URL with the EU2 domain
-    const fullWebhookUrl = webhookUrl.startsWith('http') 
-      ? webhookUrl 
-      : `https://hook.eu2.make.com/webhook/${webhookUrl}`;
+    // Ensure the webhook URL is properly formatted
+    const baseUrl = "https://hook.eu2.make.com";
+    const webhookPath = webhookUrl.replace(/^\/+/, '').replace(/^webhook\/+/, '');
+    const fullWebhookUrl = `${baseUrl}/webhook/${webhookPath}`;
     
-    console.log("Constructed webhook URL:", fullWebhookUrl);
+    console.log("Using webhook URL:", fullWebhookUrl);
 
     const response = await fetch(fullWebhookUrl, {
       method: 'POST',
