@@ -47,12 +47,12 @@ export const useRegistrationForm = () => {
     try {
       console.log('Sending confirmation email for:', registration.email);
       
-      const { error } = await supabase.functions.invoke('send-confirmation', {
+      const { error } = await supabase.functions.invoke('send-make-confirmation', {
         body: {
           name: registration.name,
           email: registration.email,
           company: registration.company,
-          language: language // Add language to the payload
+          language: language
         }
       });
 
@@ -101,7 +101,7 @@ export const useRegistrationForm = () => {
 
       console.log('Registration submitted successfully');
       
-      // Send confirmation email
+      // Send confirmation email using make.com webhook
       await sendConfirmationEmail(formData);
       
       // Trigger confetti effect on successful registration
