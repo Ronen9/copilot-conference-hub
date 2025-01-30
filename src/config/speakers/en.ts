@@ -6,7 +6,7 @@ export const englishSpeakers: Speaker[] = [
     title: "Modern Work Specialists Manager",
     topic: "Copilot 365",
     company: "Microsoft",
-    videoUrl: "https://www.youtube.com/watch?v=L38GrkE3H3A"
+    videoUrl: "https://youtube.com/watch?v=riLRJvOcolw"
   },
   {
     name: "Ronen Ehrenreich",
