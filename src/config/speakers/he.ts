@@ -34,7 +34,7 @@ export const hebrewSpeakers: Speaker[] = [
     title: "Sr. Technology Specialist, Digital-Native",
     topic: "github copilot",
     company: "Microsoft",
-    videoUrl: "https://www.youtube.com/watch?v=dMk3UoRRfyk"
+    videoUrl: "https://www.youtube.com/watch?v=xSK4QW0Kwpo"
   },
   {
     name: "יובל אבידני",

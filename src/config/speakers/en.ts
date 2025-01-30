@@ -34,7 +34,7 @@ export const englishSpeakers: Speaker[] = [
     title: "Sr. Technology Specialist, Digital-Native",
     topic: "GitHub Copilot",
     company: "Microsoft",
-    videoUrl: "https://www.youtube.com/watch?v=dMk3UoRRfyk"
+    videoUrl: "https://www.youtube.com/watch?v=xSK4QW0Kwpo"
   },
   {
     name: "Yuval Avidani",
