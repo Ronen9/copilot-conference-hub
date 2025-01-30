@@ -20,7 +20,7 @@ export const englishSpeakers: Speaker[] = [
     title: "Technical CRM Specialist, BizApps",
     topic: "Copilot Service",
     company: "Microsoft",
-    videoUrl: "https://www.youtube.com/watch?v=W3OWwa9Ybtc"
+    videoUrl: "https://youtube.com/watch?v=xXcTrOUIhSk"
   },
   {
     name: "Adi Leibowitz",
