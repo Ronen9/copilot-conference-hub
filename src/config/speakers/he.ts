@@ -27,7 +27,7 @@ export const hebrewSpeakers: Speaker[] = [
     title: "Senior Program Manager",
     topic: "copilot studio",
     company: "Microsoft",
-    videoUrl: "https://youtube.com/watch?v=3jHFQKeh3Fo"
+    videoUrl: "https://www.youtube.com/watch?v=zCjNxZhsyls"
   },
   {
     name: "אריק בידני",
