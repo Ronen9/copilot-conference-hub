@@ -9,7 +9,9 @@ export const translations = {
     vehicleNumber: "Vehicle Number",
     parkingHint: "For parking arrangements",
     submit: "Register for the Event",
-    submitting: "Registering..."
+    submitting: "Registering...",
+    registrationClosed: "Registration Closed",
+    registrationClosedMessage: "We apologize, but registration for this event has been closed as we have reached maximum capacity. Thank you for your interest!"
   },
   he: {
     formTitle: "הרשמה לאירוע",
@@ -21,6 +23,8 @@ export const translations = {
     vehicleNumber: "מספר רכב",
     parkingHint: "לצורך הסדרי חניה",
     submit: "הרשמה לאירוע",
-    submitting: "מתבצעת הרשמה..."
+    submitting: "מתבצעת הרשמה...",
+    registrationClosed: "ההרשמה סגורה",
+    registrationClosedMessage: "אנו מתנצלים, אך ההרשמה לאירוע זה נסגרה מכיוון שהגענו למספר המשתתפים המקסימלי. תודה על ההתעניינות!"
   }
 } as const;
