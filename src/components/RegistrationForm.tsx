@@ -15,8 +15,8 @@ const RegistrationForm = () => {
       <h2 className="text-3xl font-bold mb-8 text-center text-[#9b87f5]">{t.formTitle}</h2>
       
       {/* Registration Closed Message */}
-      <div className="mb-8 p-6 bg-white/5 rounded-lg border border-[#9b87f5]/30 text-center">
-        <h3 className="text-xl font-semibold mb-2 text-[#9b87f5]">
+      <div className="mb-8 p-6 bg-white/5 rounded-lg border border-[#9b87f5]/30 text-center animate-pulse shadow-[0_0_15px_rgba(155,135,245,0.3)] transition-shadow duration-1000">
+        <h3 className="text-xl font-semibold mb-2 text-[#9b87f5] animate-glow">
           {t.registrationClosed}
         </h3>
         <p className="text-gray-300">
