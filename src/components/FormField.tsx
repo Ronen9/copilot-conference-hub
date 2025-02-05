@@ -24,8 +24,8 @@ export const FormField = ({
   const isHebrew = language === 'he';
   
   return (
-    <div>
-      <label className={`block text-sm font-medium mb-2 ${isHebrew ? 'text-right' : 'text-left'}`}>
+    <div className={isHebrew ? 'text-right' : 'text-left'}>
+      <label className="block text-sm font-medium mb-2">
         {label}
         {required && <span className="text-[#ea384c] mx-1">*</span>}
         {hint && <span className="text-sm text-gray-400 mx-2">({hint})</span>}
